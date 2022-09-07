@@ -1,6 +1,6 @@
 # OOP-2022
 
-Страница для информации в Notion - https://comet-yacht-4d6.notion.site/2022-f94280da49314586afa660703c6a218f
+[Страница для информации в Notion](https://comet-yacht-4d6.notion.site/2022-f94280da49314586afa660703c6a218f)
 
 Зачет
 
