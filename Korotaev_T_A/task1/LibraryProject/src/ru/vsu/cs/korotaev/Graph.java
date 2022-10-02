@@ -10,7 +10,11 @@ public interface Graph {
 
     void addAdge(int v1, int v2);
 
+    void addVertex();
+
     void removeAdge(int v1, int v2);
+
+    void randomGraph(int vCount, int connectionProb);
 
     Iterable<Integer> adjacencies(int v);
 
