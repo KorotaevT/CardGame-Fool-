@@ -1,6 +1,10 @@
 package ru.vsu.cs.korotaev;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.function.Consumer;
 
 public interface Graph {
 
@@ -27,7 +31,46 @@ public interface Graph {
         return false;
     }
 
-    List<Integer> bfs(Graph graph, int from);
+    boolean[][] getTable();
 
-    List<Integer> dfs(Graph graph, int from);
+    static List<Integer> bfs(Graph graph, int from) {
+        boolean[] visited = new boolean[graph.vertexCount()];
+        List<Integer> answer = new LinkedList<Integer>();
+        Queue<Integer> queueWork = new LinkedList<Integer>();
+        queueWork.add(from);
+        visited[from] = true;
+        while (queueWork.size() > 0) {
+            Integer curr = queueWork.remove();
+            answer.add(curr);
+            for (Integer v : graph.adjacencies(curr)) {
+                if (!visited[v]) {
+                    queueWork.add(v);
+                    visited[v] = true;
+                }
+            }
+        }
+        return answer;
+    }
+
+    static List<Integer> dfs(Graph graph, int from) {
+        boolean[] visited = new boolean[graph.vertexCount()];
+        List<Integer> answer = new LinkedList<Integer>();
+        Stack<Integer> stack = new Stack<Integer>();
+        stack.push(from);
+        visited[from] = true;
+        answer.add(from);
+        while (!stack.empty()) {
+            Integer curr = stack.pop();
+            if(!answer.contains(curr)) {
+                answer.add(curr);
+            }
+            for (Integer v : graph.adjacencies(curr)) {
+                if (!visited[v]) {
+                    stack.push(v);
+                    visited[v] = true;
+                }
+            }
+        }
+        return answer;
+    }
 }
