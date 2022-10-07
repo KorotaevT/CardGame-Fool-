@@ -16,15 +16,15 @@ public class Main {
         System.out.println(sb + "\n");
         sb = new StringBuilder();
         adj.addVertex();
-        adj.addAdge(1, 5);
-        adj.addAdge(4, 2);
-        adj.addAdge(5, 3);
-        adj.addAdge(0, 1);
-        adj.addAdge(1, 0);
-        adj.addAdge(1, 2);
-        adj.addAdge(2, 3);
-        adj.addAdge(0, 4);
-        adj.removeAdge(1, 2);
+        adj.addEdge(1, 5);
+        adj.addEdge(4, 2);
+        adj.addEdge(5, 3);
+        adj.addEdge(0, 1);
+        adj.addEdge(1, 0);
+        adj.addEdge(1, 2);
+        adj.addEdge(2, 3);
+        adj.addEdge(0, 4);
+        adj.removeEdge(1, 2);
 
         for (int i = 0; i<adj.getTable().length; i++){
             for (int e = 0; e<adj.getTable()[i].length; e++){

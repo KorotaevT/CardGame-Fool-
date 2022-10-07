@@ -12,11 +12,11 @@ public interface Graph {
 
     int edgeCount();
 
-    void addAdge(int v1, int v2);
+    void addEdge(int v1, int v2);
 
     void addVertex();
 
-    void removeAdge(int v1, int v2);
+    void removeEdge(int v1, int v2);
 
     void randomGraph(int vCount, int connectionProb);
 
