@@ -29,7 +29,7 @@ public class AdjMatrixGraph implements Graph {
     }
 
     @Override
-    public void addAdge(int v1, int v2) {
+    public void addEdge(int v1, int v2) {
         int maxV = Math.max(v1, v2);
         if (maxV >= vertexCount()) {
             adjMatrix = Arrays.copyOf(adjMatrix, maxV + 1);
@@ -57,7 +57,7 @@ public class AdjMatrixGraph implements Graph {
     }
 
     @Override
-    public void removeAdge(int v1, int v2) {
+    public void removeEdge(int v1, int v2) {
         if (adjMatrix[v1][v2]) {
             adjMatrix[v1][v2] = false;
             eCount--;
