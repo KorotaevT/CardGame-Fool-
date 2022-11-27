@@ -26,7 +26,7 @@
             <Font name="System Bold" size="50.0" />
          </font>
       </Text>
-      <Button layoutX="28.0" layoutY="308.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="163.0" text="Закончить ход" textAlignment="CENTER">
+      <Button fx:id="nextBut" layoutX="28.0" layoutY="308.0" mnemonicParsing="false" onMouseClicked="#nextButClick" prefHeight="58.0" prefWidth="163.0" text="Закончить ход" textAlignment="CENTER">
          <font>
             <Font size="19.0" />
          </font>

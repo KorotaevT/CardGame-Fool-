@@ -36,6 +36,7 @@ public class HelloController {
         window.setScene(scene);
         window.show();
         window.setResizable(false);
+        MainArea.randomDeck();
     }
 
     @FXML
