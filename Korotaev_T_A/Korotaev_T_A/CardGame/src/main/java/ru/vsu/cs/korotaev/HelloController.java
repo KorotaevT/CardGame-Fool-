@@ -19,7 +19,7 @@ import java.util.Stack;
 public class HelloController {
 
     @FXML
-    protected void startGame(ActionEvent event) throws IOException {
+    protected void startGame(ActionEvent event) throws Exception {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("secondScene.fxml")));
         Scene scene = new Scene(parent, 1200, 700);
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -37,6 +37,7 @@ public class HelloController {
         window.show();
         window.setResizable(false);
         MainArea.randomDeck();
+        SecondPlayer.giveMassToMap();
     }
 
     @FXML

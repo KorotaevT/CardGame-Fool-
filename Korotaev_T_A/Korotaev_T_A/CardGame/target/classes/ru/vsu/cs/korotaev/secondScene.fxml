@@ -15,7 +15,7 @@
             <Image url="@../../../../../../../Sprites/BackGround.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="deck" fitHeight="251.0" fitWidth="170.0" layoutX="979.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="222.6666717529297" AnchorPane.topAnchor="219.0">
+      <ImageView fx:id="deck" fitHeight="195.0" fitWidth="150.0" layoutX="992.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="242.0" AnchorPane.topAnchor="238.0">
          <image>
             <Image url="@../../../../../../../Sprites/cardsback.png" />
          </image>
@@ -31,5 +31,329 @@
             <Font size="19.0" />
          </font>
       </Button>
+      <AnchorPane fx:id="cardPane1" layoutX="14.0" layoutY="461.0" prefHeight="200.0" prefWidth="1171.0">
+         <children>
+            <ImageView fx:id="cardSlot1" fitHeight="195.0" fitWidth="150.0" layoutX="134.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot2" fitHeight="195.0" fitWidth="150.0" layoutX="286.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot3" fitHeight="195.0" fitWidth="150.0" layoutX="438.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot4" fitHeight="195.0" fitWidth="150.0" layoutX="590.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot5" fitHeight="195.0" fitWidth="150.0" layoutX="742.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot6" fitHeight="195.0" fitWidth="150.0" layoutX="894.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="prevBut1" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" onMouseClicked="#prevPageBut" prefHeight="50.0" prefWidth="105.0" text="Prev page" />
+            <Button fx:id="nextBut1" layoutX="1051.0" layoutY="78.0" mnemonicParsing="false" onMouseClicked="#nextPageBut" prefHeight="50.0" prefWidth="105.0" text="Next page" textOverrun="CLIP" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="cardPane2" disable="true" layoutX="14.0" layoutY="461.0" prefHeight="200.0" prefWidth="1171.0" visible="false">
+         <children>
+            <ImageView fx:id="cardSlot11" fitHeight="195.0" fitWidth="150.0" layoutX="134.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot21" fitHeight="195.0" fitWidth="150.0" layoutX="286.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot31" fitHeight="195.0" fitWidth="150.0" layoutX="438.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot41" fitHeight="195.0" fitWidth="150.0" layoutX="590.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot51" fitHeight="195.0" fitWidth="150.0" layoutX="742.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot61" fitHeight="195.0" fitWidth="150.0" layoutX="894.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="prevBut11" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Prev page" />
+            <Button fx:id="nextBut11" layoutX="1051.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Next page" textOverrun="CLIP" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="cardPane3" disable="true" layoutX="14.0" layoutY="461.0" prefHeight="200.0" prefWidth="1171.0" visible="false">
+         <children>
+            <ImageView fx:id="cardSlot12" fitHeight="195.0" fitWidth="150.0" layoutX="134.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot22" fitHeight="195.0" fitWidth="150.0" layoutX="286.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot32" fitHeight="195.0" fitWidth="150.0" layoutX="438.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot42" fitHeight="195.0" fitWidth="150.0" layoutX="590.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot52" fitHeight="195.0" fitWidth="150.0" layoutX="742.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot62" fitHeight="195.0" fitWidth="150.0" layoutX="894.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="prevBut12" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Prev page" />
+            <Button fx:id="nextBut12" layoutX="1051.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Next page" textOverrun="CLIP" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="cardPane4" disable="true" layoutX="14.0" layoutY="461.0" prefHeight="200.0" prefWidth="1171.0" visible="false">
+         <children>
+            <ImageView fx:id="cardSlot13" fitHeight="195.0" fitWidth="150.0" layoutX="134.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot23" fitHeight="195.0" fitWidth="150.0" layoutX="286.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot33" fitHeight="195.0" fitWidth="150.0" layoutX="438.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot43" fitHeight="195.0" fitWidth="150.0" layoutX="590.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot53" fitHeight="195.0" fitWidth="150.0" layoutX="742.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot63" fitHeight="195.0" fitWidth="150.0" layoutX="894.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="prevBut13" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Prev page" />
+            <Button fx:id="nextBut13" layoutX="1051.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Next page" textOverrun="CLIP" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="cardPane5" disable="true" layoutX="14.0" layoutY="461.0" prefHeight="200.0" prefWidth="1171.0" visible="false">
+         <children>
+            <ImageView fx:id="cardSlot14" fitHeight="195.0" fitWidth="150.0" layoutX="134.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot24" fitHeight="195.0" fitWidth="150.0" layoutX="286.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot34" fitHeight="195.0" fitWidth="150.0" layoutX="438.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot44" fitHeight="195.0" fitWidth="150.0" layoutX="590.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot54" fitHeight="195.0" fitWidth="150.0" layoutX="742.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot64" fitHeight="195.0" fitWidth="150.0" layoutX="894.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="prevBut14" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Prev page" />
+            <Button fx:id="nextBut14" layoutX="1051.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Next page" textOverrun="CLIP" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="cardPane6" disable="true" layoutX="14.0" layoutY="461.0" prefHeight="200.0" prefWidth="1171.0" visible="false">
+         <children>
+            <ImageView fx:id="cardSlot15" fitHeight="195.0" fitWidth="150.0" layoutX="134.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot25" fitHeight="195.0" fitWidth="150.0" layoutX="286.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot35" fitHeight="195.0" fitWidth="150.0" layoutX="438.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot45" fitHeight="195.0" fitWidth="150.0" layoutX="590.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot55" fitHeight="195.0" fitWidth="150.0" layoutX="742.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot65" fitHeight="195.0" fitWidth="150.0" layoutX="894.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="prevBut15" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Prev page" />
+            <Button fx:id="nextBut15" layoutX="1051.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Next page" textOverrun="CLIP" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="cardPane7" disable="true" layoutX="14.0" layoutY="461.0" prefHeight="200.0" prefWidth="1171.0" visible="false">
+         <children>
+            <ImageView fx:id="cardSlot16" fitHeight="195.0" fitWidth="150.0" layoutX="134.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot26" fitHeight="195.0" fitWidth="150.0" layoutX="286.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot36" fitHeight="195.0" fitWidth="150.0" layoutX="438.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot46" fitHeight="195.0" fitWidth="150.0" layoutX="590.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot56" fitHeight="195.0" fitWidth="150.0" layoutX="742.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot66" fitHeight="195.0" fitWidth="150.0" layoutX="894.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="prevBut16" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Prev page" />
+            <Button fx:id="nextBut16" layoutX="1051.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Next page" textOverrun="CLIP" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="cardPane8" disable="true" layoutX="14.0" layoutY="461.0" prefHeight="200.0" prefWidth="1171.0" visible="false">
+         <children>
+            <ImageView fx:id="cardSlot17" fitHeight="195.0" fitWidth="150.0" layoutX="134.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot27" fitHeight="195.0" fitWidth="150.0" layoutX="286.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot37" fitHeight="195.0" fitWidth="150.0" layoutX="438.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot47" fitHeight="195.0" fitWidth="150.0" layoutX="590.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot57" fitHeight="195.0" fitWidth="150.0" layoutX="742.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot67" fitHeight="195.0" fitWidth="150.0" layoutX="894.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="prevBut17" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Prev page" />
+            <Button fx:id="nextBut17" layoutX="1051.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Next page" textOverrun="CLIP" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="cardPane9" disable="true" layoutX="14.0" layoutY="461.0" prefHeight="200.0" prefWidth="1171.0" visible="false">
+         <children>
+            <ImageView fx:id="cardSlot18" fitHeight="195.0" fitWidth="150.0" layoutX="134.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot28" fitHeight="195.0" fitWidth="150.0" layoutX="286.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot38" fitHeight="195.0" fitWidth="150.0" layoutX="438.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot48" fitHeight="195.0" fitWidth="150.0" layoutX="590.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot58" fitHeight="195.0" fitWidth="150.0" layoutX="742.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardSlot68" fitHeight="195.0" fitWidth="150.0" layoutX="894.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/cardsback.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="prevBut18" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Prev page" />
+            <Button fx:id="nextBut18" layoutX="1051.0" layoutY="78.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="105.0" text="Next page" textOverrun="CLIP" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

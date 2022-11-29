@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FirstPlayer {
-    private List<Card> fpd = new ArrayList<>();
+    private static List<Card> fpd = new ArrayList<>();
 
     public FirstPlayer(){
 
     }
 
-    public List<Card> getFpd() {
-        return this.fpd;
+    public static List<Card> getFpd() {
+        return fpd;
     }
 
-    public void setFpd(List<Card> fpd) {
-        this.fpd = fpd;
+    public static void setFpd(List<Card> fpd) {
+        FirstPlayer.fpd = fpd;
     }
 }
