@@ -10,6 +10,28 @@ public class MainArea {
     private static Color trumpCol;
     private static List<Card> curPage = new ArrayList<>();
     private static int pageNum=0;
+    private static HashMap<Rank, Integer> massMap = new HashMap<Rank, Integer>();
+    private static Card[] gameFieldCardAttack = new Card[6];
+    private static Card[] gameFieldCardDefence = new Card[6];
+    private static Card takenCard = new Card();
+    private static boolean cardIsTaken = false;
+
+    public static void giveMassToMap(){
+        massMap.put(Rank.Two, 200);
+        massMap.put(Rank.Three, 300);
+        massMap.put(Rank.Four, 400);
+        massMap.put(Rank.Five, 500);
+        massMap.put(Rank.Six, 600);
+        massMap.put(Rank.Seven, 700);
+        massMap.put(Rank.Eight, 800);
+        massMap.put(Rank.Nine, 900);
+        massMap.put(Rank.Ten, 1000);
+        massMap.put(Rank.Jack, 1100);
+        massMap.put(Rank.Queen, 1200);
+        massMap.put(Rank.King, 1300);
+        massMap.put(Rank.Ace, 1400);
+        massMap.put(Rank.Joker, 1500);
+    }
 
     private static List<Card> createDeck(){
         List<Card> list = new ArrayList<>();
@@ -61,6 +83,40 @@ public class MainArea {
         return first;
     }
 
+
+
+    public static List<Card> getDeck() {
+        return deck;
+    }
+
+    public static void setDeck(List<Card> deck) {
+        MainArea.deck = deck;
+    }
+
+    public static Phase getPhase() {
+        return phase;
+    }
+
+    public static void setPhase(Phase phase) {
+        MainArea.phase = phase;
+    }
+
+    public static Color getTrumpCol() {
+        return trumpCol;
+    }
+
+    public static void setTrumpCol(Color trumpCol) {
+        MainArea.trumpCol = trumpCol;
+    }
+
+    public static HashMap<Rank, Integer> getMassMap() {
+        return massMap;
+    }
+
+    public static void setMassMap(HashMap<Rank, Integer> massMap) {
+        MainArea.massMap = massMap;
+    }
+
     public static List<Card> getCurPage() {
         return curPage;
     }
@@ -75,5 +131,37 @@ public class MainArea {
 
     public static void setPageNum(int pageNum) {
         MainArea.pageNum = pageNum;
+    }
+
+    public static Card[] getGameFieldCardAttack() {
+        return gameFieldCardAttack;
+    }
+
+    public static void setGameFieldCardAttack(Card[] gameFieldCardAttack) {
+        MainArea.gameFieldCardAttack = gameFieldCardAttack;
+    }
+
+    public static Card[] getGameFieldCardDefence() {
+        return gameFieldCardDefence;
+    }
+
+    public static void setGameFieldCardDefence(Card[] gameFieldCardDefence) {
+        MainArea.gameFieldCardDefence = gameFieldCardDefence;
+    }
+
+    public static Card getTakenCard() {
+        return takenCard;
+    }
+
+    public static void setTakenCard(Card takenCard) {
+        MainArea.takenCard = takenCard;
+    }
+
+    public static boolean isCardIsTaken() {
+        return cardIsTaken;
+    }
+
+    public static void setCardIsTaken(boolean cardIsTaken) {
+        MainArea.cardIsTaken = cardIsTaken;
     }
 }

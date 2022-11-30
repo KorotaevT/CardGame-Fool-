@@ -9,24 +9,6 @@ import java.util.List;
 public class SecondPlayer {
     private static List<Card> spd = new ArrayList<>();
     private static List<Integer> mass = new ArrayList<>();
-    private static HashMap<Rank, Integer> massMap = new HashMap<Rank, Integer>();
-
-    public static void giveMassToMap(){
-        massMap.put(Rank.Two, 200);
-        massMap.put(Rank.Three, 300);
-        massMap.put(Rank.Four, 400);
-        massMap.put(Rank.Five, 500);
-        massMap.put(Rank.Six, 600);
-        massMap.put(Rank.Seven, 700);
-        massMap.put(Rank.Eight, 800);
-        massMap.put(Rank.Nine, 900);
-        massMap.put(Rank.Ten, 1000);
-        massMap.put(Rank.Jack, 1100);
-        massMap.put(Rank.Queen, 1200);
-        massMap.put(Rank.King, 1300);
-        massMap.put(Rank.Ace, 1400);
-        massMap.put(Rank.Joker, 1500);
-    }
 
     public static List<Card> getSpd() {
         return spd;
@@ -62,7 +44,7 @@ public class SecondPlayer {
             mass.add(0);
         }
         for(int i = 0; i<spd.size(); i++){
-            for (HashMap.Entry<Rank, Integer> entry : massMap.entrySet()) {
+            for (HashMap.Entry<Rank, Integer> entry : MainArea.getMassMap().entrySet()) {
                 Rank key = entry.getKey();
                 Integer value = entry.getValue();
                 if(spd.get(i).getRank() == key){

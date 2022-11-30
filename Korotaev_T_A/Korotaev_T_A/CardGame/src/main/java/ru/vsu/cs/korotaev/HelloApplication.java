@@ -18,7 +18,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1200, 700);
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 750);
         stage.setTitle("CardGame");
         ImageView imageView = (ImageView)fxmlLoader.getNamespace().get("back");
         Image image = new Image("file:Sprites/BackGround.jpg");

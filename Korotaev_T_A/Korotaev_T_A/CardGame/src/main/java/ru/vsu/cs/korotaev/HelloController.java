@@ -21,7 +21,7 @@ public class HelloController {
     @FXML
     protected void startGame(ActionEvent event) throws Exception {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("secondScene.fxml")));
-        Scene scene = new Scene(parent, 1200, 700);
+        Scene scene = new Scene(parent, 1300, 750);
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
         window.setTitle("CardGame");
 
@@ -37,7 +37,7 @@ public class HelloController {
         window.show();
         window.setResizable(false);
         MainArea.randomDeck();
-        SecondPlayer.giveMassToMap();
+        MainArea.giveMassToMap();
     }
 
     @FXML
