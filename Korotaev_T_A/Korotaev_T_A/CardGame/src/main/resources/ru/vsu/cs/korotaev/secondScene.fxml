@@ -5,6 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -15,15 +16,25 @@
             <Image url="@../../../../../../../Sprites/BackGround.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="deck" fitHeight="180.0" fitWidth="135.0" layoutX="1119.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="285.0" AnchorPane.topAnchor="285.0">
+      <ImageView fx:id="trumpCard" fitHeight="161.0" fitWidth="119.0" layoutX="1146.0" layoutY="293.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
          <image>
             <Image url="@../../../../../../../Sprites/cardsback.png" />
          </image>
       </ImageView>
-      <Circle fill="#38a2ff" layoutX="1185.0" layoutY="375.0" radius="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" />
-      <Text fx:id="deckNum" layoutX="1156.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="54">
+      <ImageView fx:id="deck" fitHeight="180.0" fitWidth="135.0" layoutX="1154.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="285.0" AnchorPane.topAnchor="285.0">
+         <image>
+            <Image url="@../../../../../../../Sprites/cardsback.png" />
+         </image>
+      </ImageView>
+      <Circle fx:id="deckCircle" fill="#38a2ff" layoutX="1220.0" layoutY="375.0" onMouseClicked="#giveCards" radius="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" />
+      <Text fx:id="deckNum" layoutX="1178.0" layoutY="389.0" onMouseClicked="#giveCards" strokeType="OUTSIDE" strokeWidth="0.0" text="54" textAlignment="CENTER" visible="false" wrappingWidth="83.906982421875">
          <font>
-            <Font name="System Bold" size="50.0" />
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="deckNumText" layoutX="1170.0" layoutY="379.0" onMouseClicked="#giveCards" strokeType="OUTSIDE" strokeWidth="0.0" text="Раздать карты" textAlignment="CENTER" wrappingWidth="100.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
          </font>
       </Text>
       <AnchorPane fx:id="cardPane1" layoutY="540.0" prefHeight="218.0" prefWidth="1300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -58,21 +69,21 @@
                   <Image url="@../../../../../../../Sprites/cardsback.png" />
                </image>
             </ImageView>
-            <Button fx:id="prevBut1" layoutX="52.0" layoutY="79.0" mnemonicParsing="false" onMouseClicked="#prevPageBut" prefHeight="60.0" prefWidth="105.0" text="Prev page" />
-            <Button fx:id="nextBut1" layoutX="1138.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#nextPageBut" prefHeight="60.0" prefWidth="105.0" text="Next page" textOverrun="CLIP" />
+            <Button fx:id="prevBut1" layoutX="52.0" layoutY="79.0" mnemonicParsing="false" onMouseClicked="#prevPageBut" prefHeight="60.0" prefWidth="105.0" text="Prev page" visible="false" />
+            <Button fx:id="nextBut1" layoutX="1138.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#nextPageBut" prefHeight="60.0" prefWidth="105.0" text="Next page" textOverrun="CLIP" visible="false" />
          </children>
       </AnchorPane>
-      <Button fx:id="nextBut" layoutY="335.0" mnemonicParsing="false" onMouseClicked="#nextButClick" prefHeight="60.0" prefWidth="160.0" text="Закончить ход" textAlignment="CENTER">
+      <Button fx:id="nextBut" layoutX="14.0" layoutY="345.0" mnemonicParsing="false" onMouseClicked="#nextButClick" prefHeight="60.0" prefWidth="160.0" text="Закончить ход" textAlignment="CENTER" visible="false">
          <font>
             <Font size="19.0" />
          </font>
       </Button>
-      <Button fx:id="takeCardBut" layoutY="455.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Забрать карты" textAlignment="CENTER">
+      <Button fx:id="takeCardBut" layoutX="14.0" layoutY="465.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Забрать карты" textAlignment="CENTER" visible="false">
          <font>
             <Font size="19.0" />
          </font>
       </Button>
-      <Button fx:id="reverseBut" layoutY="235.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Перевести ход" textAlignment="CENTER">
+      <Button fx:id="reverseBut" layoutX="14.0" layoutY="225.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Перевести ход" textAlignment="CENTER" visible="false">
          <font>
             <Font size="19.0" />
          </font>
@@ -109,6 +120,18 @@
                   <Image url="@../../../../../../../Sprites/cardsback.png" />
                </image>
             </ImageView>
+            <Circle fx:id="enemyDeckCircle" fill="#38a2ff" layoutX="650.0" layoutY="110.0" radius="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" visible="false" />
+            <Text fx:id="enemyDeckNum" layoutX="608.0" layoutY="124.0" onMouseClicked="#giveCards" strokeType="OUTSIDE" strokeWidth="0.0" text="5" textAlignment="CENTER" visible="false" wrappingWidth="83.906982421875">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Text>
+            <Rectangle fx:id="phaseBack" arcHeight="5.0" arcWidth="5.0" fill="LAWNGREEN" height="128.0" layoutX="14.0" layoutY="45.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="160.0" />
+            <Text fx:id="phaseText" layoutX="32.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Атака" textAlignment="CENTER" visible="false" wrappingWidth="123.99999999999994">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
       <ImageView fx:id="gameCardSlot_1" fitHeight="180.0" fitWidth="135.0" layoutX="195.0" layoutY="285.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
@@ -137,6 +160,36 @@
          </image>
       </ImageView>
       <ImageView fx:id="gameCardSlot_6" fitHeight="180.0" fitWidth="135.0" layoutX="970.0" layoutY="285.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Sprites/cardsback.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="gameCardSlotDefFirst_1" fitHeight="180.0" fitWidth="135.0" layoutX="195.0" layoutY="325.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Sprites/cardsback.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="gameCardSlotDefFirst_2" fitHeight="180.0" fitWidth="135.0" layoutX="350.0" layoutY="325.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Sprites/cardsback.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="gameCardSlotDefFirst_3" fitHeight="180.0" fitWidth="135.0" layoutX="505.0" layoutY="325.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Sprites/cardsback.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="gameCardSlotDefFirst_4" fitHeight="180.0" fitWidth="135.0" layoutX="660.0" layoutY="325.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Sprites/cardsback.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="gameCardSlotDefFirst_5" fitHeight="180.0" fitWidth="135.0" layoutX="815.0" layoutY="325.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Sprites/cardsback.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="gameCardSlotDefFirst_6" fitHeight="180.0" fitWidth="135.0" layoutX="970.0" layoutY="325.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../../../../Sprites/cardsback.png" />
          </image>

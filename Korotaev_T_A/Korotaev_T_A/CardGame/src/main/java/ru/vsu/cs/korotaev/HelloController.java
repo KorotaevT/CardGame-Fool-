@@ -29,7 +29,7 @@ public class HelloController {
         Image image = new Image("file:Sprites/BackGround.jpg");
         imageView.setImage(image);
 
-        ImageView imageView2 = (ImageView) parent.getChildrenUnmodifiable().get(1);
+        ImageView imageView2 = (ImageView) parent.getChildrenUnmodifiable().get(2);
         Image image2 = new Image("file:Sprites/cardsback.png");
         imageView2.setImage(image2);
 

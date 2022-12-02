@@ -1,7 +1,7 @@
 package ru.vsu.cs.korotaev;
 
 public class HeapSort {
-    private static <T> void siftDown(T data[], int[] orderValues, int i, int n) {
+    private static <T> void siftDown(T[] data, int[] orderValues, int i, int n) {
         int orderValue = orderValues[i];
         T dataValue = data[i];
         while (true) {

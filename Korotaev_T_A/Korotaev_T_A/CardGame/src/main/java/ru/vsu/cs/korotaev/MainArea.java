@@ -6,8 +6,10 @@ import java.util.*;
 
 public class MainArea {
     private static List<Card> deck = createDeck();
-    private static Phase phase;
+    private static Phase phase = Phase.FirstAttack;
     private static Color trumpCol;
+    private static boolean isStartGame;
+    private static int cardNum = 54;
     private static List<Card> curPage = new ArrayList<>();
     private static int pageNum=0;
     private static HashMap<Rank, Integer> massMap = new HashMap<Rank, Integer>();
@@ -15,6 +17,7 @@ public class MainArea {
     private static Card[] gameFieldCardDefence = new Card[6];
     private static Card takenCard = new Card();
     private static boolean cardIsTaken = false;
+    private static boolean[] isTaped = new boolean[6];
 
     public static void giveMassToMap(){
         massMap.put(Rank.Two, 200);
@@ -31,6 +34,18 @@ public class MainArea {
         massMap.put(Rank.King, 1300);
         massMap.put(Rank.Ace, 1400);
         massMap.put(Rank.Joker, 1500);
+    }
+
+    private static<T> void shuffle(List<T> list)
+    {
+        Random random = new Random();
+        for (int i = list.size() - 1; i >= 1; i--)
+        {
+            int j = random.nextInt(i + 1);
+            T obj = list.get(i);
+            list.set(i, list.get(j));
+            list.set(j, obj);
+        }
     }
 
     private static List<Card> createDeck(){
@@ -53,7 +68,7 @@ public class MainArea {
     }
 
     public static void randomDeck(){
-        Collections.shuffle(deck, new Random());
+        shuffle(deck);
         trumpCol = deck.get(deck.size()-1).getColor();
         for(Card el : deck){
             if (el.getColor()==trumpCol){
@@ -75,6 +90,7 @@ public class MainArea {
                     if (!card.isBroken()) {
                         first.add(card);
                         card.setBroken(true);
+                        cardNum -=1;
                         break;
                     }
                     }
@@ -163,5 +179,29 @@ public class MainArea {
 
     public static void setCardIsTaken(boolean cardIsTaken) {
         MainArea.cardIsTaken = cardIsTaken;
+    }
+
+    public static boolean isIsStartGame() {
+        return isStartGame;
+    }
+
+    public static void setIsStartGame(boolean isStartGame) {
+        MainArea.isStartGame = isStartGame;
+    }
+
+    public static int getCardNum() {
+        return cardNum;
+    }
+
+    public static void setCardNum(int cardNum) {
+        MainArea.cardNum = cardNum;
+    }
+
+    public static boolean[] getIsTaped() {
+        return isTaped;
+    }
+
+    public static void setIsTaped(boolean[] isTaped) {
+        MainArea.isTaped = isTaped;
     }
 }

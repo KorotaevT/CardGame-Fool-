@@ -41,28 +41,23 @@ public class FirstPlayer {
         return list;
     }
 
-    public static void getMass() throws Exception {
-        mass.clear();
-        for(int e = 0; e<fpd.size(); e++){
-            mass.add(0);
-        }
-        for(int i = 0; i<fpd.size(); i++){
-            for (HashMap.Entry<Rank, Integer> entry : MainArea.getMassMap().entrySet()) {
-                Rank key = entry.getKey();
-                Integer value = entry.getValue();
-                if(fpd.get(i).getRank() == key){
-                    mass.set(i, value);
-                    if(fpd.get(i).isTrump()){
-                        mass.set(i, mass.get(i)+1400);
+    public static void getMass(){
+            mass.clear();
+            for (int e = 0; e < fpd.size(); e++) {
+                mass.add(0);
+            }
+            for (int i = 0; i < fpd.size(); i++) {
+                for (HashMap.Entry<Rank, Integer> entry : MainArea.getMassMap().entrySet()) {
+                    Rank key = entry.getKey();
+                    Integer value = entry.getValue();
+                    if (fpd.get(i).getRank() == key) {
+                        mass.set(i, value);
+                        if (fpd.get(i).isTrump()) {
+                            mass.set(i, mass.get(i) + 1400);
+                        }
+                        break;
                     }
-                    break;
                 }
             }
-        }
-        Object[] sortSpd = fpd.stream().toArray();
-        int[] sortMass = mass.stream().mapToInt(i->i).toArray();
-        HeapSort.sort(sortSpd, sortMass);
-        fpd = convertCArrayToList(sortSpd);
-        mass = convertMArrayToList(sortMass);
     }
 }

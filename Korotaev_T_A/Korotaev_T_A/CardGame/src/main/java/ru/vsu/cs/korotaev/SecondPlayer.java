@@ -1,10 +1,7 @@
 package ru.vsu.cs.korotaev;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class SecondPlayer {
     private static List<Card> spd = new ArrayList<>();
@@ -61,5 +58,28 @@ public class SecondPlayer {
         HeapSort.sort(sortSpd, sortMass);
         spd = convertCArrayToList(sortSpd);
         mass = convertMArrayToList(sortMass);
+    }
+
+    public static void ifAttack(){
+        List<Card> attackDeck = new ArrayList<>();
+        List<Integer> index = new ArrayList<>();
+        attackDeck.add(spd.get(0));
+        index.add(0);
+        for(int i = 1; i<spd.size(); i++){
+            if(Objects.equals(mass.get(i), mass.get(index.get(0)))) {
+                attackDeck.add(spd.get(i));
+                index.add(i);
+            }
+        }
+        for (Integer integer : index) {
+            spd.remove((int) integer);
+        }
+        Card[] attack = new Card[attackDeck.size()];
+        for(int i = 0; i<attackDeck.size(); i++){
+            attack[i] = attackDeck.get(i);
+        }
+        MainArea.setCardNum(spd.size());
+        MainArea.setGameFieldCardAttack(attack);
+
     }
 }
