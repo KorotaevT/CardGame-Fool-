@@ -74,12 +74,40 @@ public class SecondPlayer {
         for (Integer integer : index) {
             spd.remove((int) integer);
         }
-        Card[] attack = new Card[attackDeck.size()];
+        Card[] attack = new Card[6];
         for(int i = 0; i<attackDeck.size(); i++){
             attack[i] = attackDeck.get(i);
         }
-        MainArea.setCardNum(spd.size());
         MainArea.setGameFieldCardAttack(attack);
 
+    }
+
+    public static boolean ifTossing() throws Exception {
+        boolean isAdd = false;
+        Card[] defDeck = MainArea.getGameFieldCardDefence();
+        Card[] atDeck = MainArea.getGameFieldCardAttack();
+        int[] indexes = new int[spd.size()];
+        for(int i = 0; i<spd.size(); i++){
+            for (Card card : defDeck) {
+                if (card!=null) {
+                    if(spd.get(i).getRank() == card.getRank() && !spd.get(i).isTrump()){
+                        for (int k = 0; k<atDeck.length; k++) {
+                            if(atDeck[k]==null) {
+                                atDeck[k]=spd.get(i);
+                                spd.remove(i);
+                                if(i!=0) {
+                                    i--;
+                                }
+                                isAdd = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        MainArea.setGameFieldCardAttack(atDeck);
+        getMass();
+        return isAdd;
     }
 }

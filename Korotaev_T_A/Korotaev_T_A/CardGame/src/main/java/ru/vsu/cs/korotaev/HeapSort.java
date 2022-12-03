@@ -27,7 +27,7 @@ public class HeapSort {
         data[i] = dataValue;
     }
 
-    public static <T> void sort(T data[], int[] orderValues) throws Exception {
+    public static <T> void sort(T[] data, int[] orderValues) throws Exception {
         if (data.length != orderValues.length) {
             throw new Exception("Arrays' sizes aren't equal");
         }
