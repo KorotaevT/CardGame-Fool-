@@ -19,6 +19,7 @@ public class MainArea {
     private static boolean cardIsTaken = false;
     private static boolean[] isTaped = new boolean[6];
     private static boolean[] isDefFirstTaped = new boolean[6];
+    private static boolean[] isDefSecondTaped = new boolean[6];
 
     public static void giveMassToMap() {
         massMap.put(Rank.Two, 200);
@@ -266,5 +267,13 @@ public class MainArea {
 
     public static void setIsDefFirstTaped(boolean[] isDefFirstTaped) {
         MainArea.isDefFirstTaped = isDefFirstTaped;
+    }
+
+    public static boolean[] getIsDefSecondTaped() {
+        return isDefSecondTaped;
+    }
+
+    public static void setIsDefSecondTaped(boolean[] isDefSecondTaped) {
+        MainArea.isDefSecondTaped = isDefSecondTaped;
     }
 }

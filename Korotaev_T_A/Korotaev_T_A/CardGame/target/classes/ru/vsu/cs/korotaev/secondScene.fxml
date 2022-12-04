@@ -78,7 +78,7 @@
             <Font size="19.0" />
          </font>
       </Button>
-      <Button fx:id="takeCardBut" layoutX="14.0" layoutY="465.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Забрать карты" textAlignment="CENTER" visible="false">
+      <Button fx:id="takeCardBut" layoutX="14.0" layoutY="465.0" mnemonicParsing="false" onMouseClicked="#pickUpCards" prefHeight="60.0" prefWidth="160.0" text="Забрать карты" textAlignment="CENTER" visible="false">
          <font>
             <Font size="19.0" />
          </font>
@@ -160,6 +160,36 @@
          </image>
       </ImageView>
       <ImageView fx:id="gameCardSlotDefFirst_6" fitHeight="180.0" fitWidth="135.0" layoutX="970.0" layoutY="325.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@null" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="gameCardSlotDefSecond_1" disable="true" fitHeight="180.0" fitWidth="135.0" layoutX="195.0" layoutY="245.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@null" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="gameCardSlotDefSecond_2" disable="true" fitHeight="180.0" fitWidth="135.0" layoutX="350.0" layoutY="245.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@null" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="gameCardSlotDefSecond_3" disable="true" fitHeight="180.0" fitWidth="135.0" layoutX="505.0" layoutY="245.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@null" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="gameCardSlotDefSecond_4" disable="true" fitHeight="180.0" fitWidth="135.0" layoutX="660.0" layoutY="245.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@null" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="gameCardSlotDefSecond_5" disable="true" fitHeight="180.0" fitWidth="135.0" layoutX="815.0" layoutY="245.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@null" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="gameCardSlotDefSecond_6" disable="true" fitHeight="180.0" fitWidth="135.0" layoutX="970.0" layoutY="245.0" onMouseClicked="#putCard" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@null" />
          </image>

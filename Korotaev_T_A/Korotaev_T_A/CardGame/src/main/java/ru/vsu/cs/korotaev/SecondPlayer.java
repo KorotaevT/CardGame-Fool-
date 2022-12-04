@@ -86,7 +86,6 @@ public class SecondPlayer {
         boolean isAdd = false;
         Card[] defDeck = MainArea.getGameFieldCardDefence();
         Card[] atDeck = MainArea.getGameFieldCardAttack();
-        int[] indexes = new int[spd.size()];
         for(int i = 0; i<spd.size(); i++){
             for (Card card : defDeck) {
                 if (card!=null) {
@@ -94,6 +93,7 @@ public class SecondPlayer {
                         for (int k = 0; k<atDeck.length; k++) {
                             if(atDeck[k]==null) {
                                 atDeck[k]=spd.get(i);
+                                MainArea.getIsTaped()[k]=true;
                                 spd.remove(i);
                                 if(i!=0) {
                                     i--;
@@ -109,5 +109,19 @@ public class SecondPlayer {
         MainArea.setGameFieldCardAttack(atDeck);
         getMass();
         return isAdd;
+    }
+
+    public static void ifDefence(){
+        Card[] defenceDeck = MainArea.getGameFieldCardDefence();
+        for(int e = 0; e<MainArea.getGameFieldCardAttack().length; e++){
+            for(int i = 1; i<spd.size(); i++){
+                if(!MainArea.getIsDefSecondTaped()[e] && MainArea.getGameFieldCardAttack()[e]!=null && MainArea.cardComparator(spd.get(i), MainArea.getGameFieldCardAttack()[e])) {
+                    defenceDeck[e] = spd.get(i);
+                    spd.remove(i);
+                    break;
+                }
+            }
+        }
+        MainArea.setGameFieldCardDefence(defenceDeck);
     }
 }
