@@ -20,6 +20,7 @@ public class MainArea {
     private static boolean[] isTaped = new boolean[6];
     private static boolean[] isDefFirstTaped = new boolean[6];
     private static boolean[] isDefSecondTaped = new boolean[6];
+    private static boolean gameIsEnded = false;
 
     public static void giveMassToMap() {
         massMap.put(Rank.Two, 200);
@@ -48,7 +49,7 @@ public class MainArea {
         }
     }
 
-    private static List<Card> createDeck() {
+    public static List<Card> createDeck() {
         List<Card> list = new ArrayList<>();
         for (Color allColor : Color.values()) {
             if (allColor != Color.Black && allColor != Color.Red) {
@@ -275,5 +276,13 @@ public class MainArea {
 
     public static void setIsDefSecondTaped(boolean[] isDefSecondTaped) {
         MainArea.isDefSecondTaped = isDefSecondTaped;
+    }
+
+    public static boolean isGameIsEnded() {
+        return gameIsEnded;
+    }
+
+    public static void setGameIsEnded(boolean gameIsEnded) {
+        MainArea.gameIsEnded = gameIsEnded;
     }
 }

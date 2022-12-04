@@ -7,6 +7,8 @@ import java.util.List;
 public class FirstPlayer {
     private static List<Card> fpd = new ArrayList<>();
 
+    private static List<Integer> mass = new ArrayList<>();
+
     public FirstPlayer(){
 
     }
@@ -19,7 +21,6 @@ public class FirstPlayer {
         FirstPlayer.fpd = fpd;
     }
 
-    private static List<Integer> mass = new ArrayList<>();
 
     public static <Card> List<Card> convertCArrayToList(Object[] array)
     {
@@ -41,6 +42,10 @@ public class FirstPlayer {
         return list;
     }
 
+    public static void setMass(List<Integer> mass) {
+        FirstPlayer.mass = mass;
+    }
+
     public static void getMass(){
             mass.clear();
             for (int e = 0; e < fpd.size(); e++) {
@@ -59,5 +64,7 @@ public class FirstPlayer {
                     }
                 }
             }
+
+
     }
 }

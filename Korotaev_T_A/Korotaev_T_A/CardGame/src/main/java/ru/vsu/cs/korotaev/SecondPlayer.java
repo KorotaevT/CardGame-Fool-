@@ -37,6 +37,7 @@ public class SecondPlayer {
 
     public static void getMass() throws Exception {
         mass.clear();
+        //крашит при одной карте
         for(int e = 0; e<spd.size(); e++){
             mass.add(0);
         }
@@ -55,24 +56,27 @@ public class SecondPlayer {
         }
         Object[] sortSpd = spd.stream().toArray();
         int[] sortMass = mass.stream().mapToInt(i->i).toArray();
-        HeapSort.sort(sortSpd, sortMass);
+        if(sortMass.length>1) {
+            HeapSort.sort(sortSpd, sortMass);
+        }
         spd = convertCArrayToList(sortSpd);
         mass = convertMArrayToList(sortMass);
     }
 
-    public static void ifAttack(){
+    public static void ifAttack() throws Exception {
         List<Card> attackDeck = new ArrayList<>();
-        List<Integer> index = new ArrayList<>();
         attackDeck.add(spd.get(0));
-        index.add(0);
-        for(int i = 1; i<spd.size(); i++){
-            if(Objects.equals(mass.get(i), mass.get(index.get(0)))) {
+        Card cur = spd.get(0);
+        Integer curM = mass.get(0);
+        spd.remove(0);
+        getMass();
+        for(int i = 0; i<spd.size(); i++){
+            if(Objects.equals(mass.get(i), curM)) {
                 attackDeck.add(spd.get(i));
-                index.add(i);
+                spd.remove(i);
+                getMass();
+                i=0;
             }
-        }
-        for (Integer integer : index) {
-            spd.remove((int) integer);
         }
         Card[] attack = new Card[6];
         for(int i = 0; i<attackDeck.size(); i++){
@@ -111,7 +115,18 @@ public class SecondPlayer {
         return isAdd;
     }
 
-    public static void ifDefence(){
+    public static void pickUpEnemyCards() {
+        for(int i = 0; i<6; i++) {
+            if (MainArea.getGameFieldCardDefence()[i] != null) {
+               SecondPlayer.getSpd().add(MainArea.getGameFieldCardDefence()[i]);
+            }
+            if (MainArea.getGameFieldCardAttack()[i] != null) {
+                SecondPlayer.getSpd().add(MainArea.getGameFieldCardAttack()[i]);
+            }
+        }
+    }
+
+    public static boolean ifDefence(){
         Card[] defenceDeck = MainArea.getGameFieldCardDefence();
         for(int e = 0; e<MainArea.getGameFieldCardAttack().length; e++){
             for(int i = 1; i<spd.size(); i++){
@@ -122,6 +137,26 @@ public class SecondPlayer {
                 }
             }
         }
-        MainArea.setGameFieldCardDefence(defenceDeck);
+        int defence_num = 0;
+        int at_num = 0;
+        for(int e = 0; e<MainArea.getGameFieldCardAttack().length; e++){
+            if(MainArea.getGameFieldCardAttack()[e]!=null){
+                at_num++;
+            }
+            if(MainArea.getGameFieldCardDefence()[e]!=null){
+                defence_num++;
+            }
+        }
+        if(defence_num==at_num || spd.size()==0) {
+            MainArea.setGameFieldCardDefence(defenceDeck);
+            return true;
+        }else {
+            pickUpEnemyCards();
+            return false;
+        }
+    }
+
+    public static void setMass(List<Integer> mass) {
+        SecondPlayer.mass = mass;
     }
 }

@@ -96,8 +96,8 @@
                   <Font name="System Bold" size="36.0" />
                </font>
             </Text>
-            <Rectangle fx:id="phaseBack" arcHeight="5.0" arcWidth="5.0" fill="LAWNGREEN" height="128.0" layoutX="14.0" layoutY="45.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="160.0" />
-            <Text fx:id="phaseText" layoutX="32.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Атака" textAlignment="CENTER" visible="false" wrappingWidth="123.99999999999994">
+            <Rectangle fx:id="phaseBack" arcHeight="5.0" arcWidth="5.0" fill="LAWNGREEN" height="128.0" layoutX="14.0" layoutY="45.0" stroke="BLACK" strokeType="INSIDE" width="160.0" />
+            <Text fx:id="phaseText" layoutX="14.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Атака" textAlignment="CENTER" wrappingWidth="159.99999999999994">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
@@ -194,5 +194,10 @@
             <Image url="@null" />
          </image>
       </ImageView>
+      <Button fx:id="endBut" disable="true" layoutX="412.0" layoutY="273.0" mnemonicParsing="false" onAction="#endGameBut" prefHeight="201.0" prefWidth="447.0" text="Вернуться в главное меню" textAlignment="CENTER" visible="false">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
