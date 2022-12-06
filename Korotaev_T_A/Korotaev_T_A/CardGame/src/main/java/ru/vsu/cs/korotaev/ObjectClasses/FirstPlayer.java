@@ -1,4 +1,7 @@
-package ru.vsu.cs.korotaev;
+package ru.vsu.cs.korotaev.ObjectClasses;
+
+import ru.vsu.cs.korotaev.Enums.Rank;
+import ru.vsu.cs.korotaev.LogicClasses.MainArea;
 
 import java.util.ArrayList;
 import java.util.HashMap;

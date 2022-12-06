@@ -1,8 +1,9 @@
-package ru.vsu.cs.korotaev;
+package ru.vsu.cs.korotaev.ObjectClasses;
 
-import javafx.scene.image.ImageView;
+import ru.vsu.cs.korotaev.Enums.Rank;
+import ru.vsu.cs.korotaev.LogicClasses.HeapSort;
+import ru.vsu.cs.korotaev.LogicClasses.MainArea;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class SecondPlayer {
@@ -87,7 +88,7 @@ public class SecondPlayer {
 
     }
 
-    public static boolean ifTossing() throws Exception {
+    public static boolean ifTossing(boolean[] isTaped) throws Exception {
         boolean isAdd = false;
         Card[] defDeck = MainArea.getGameFieldCardDefence();
         Card[] atDeck = MainArea.getGameFieldCardAttack();
@@ -98,7 +99,7 @@ public class SecondPlayer {
                         for (int k = 0; k<atDeck.length; k++) {
                             if(atDeck[k]==null) {
                                 atDeck[k]=spd.get(i);
-                                MainArea.getIsTaped()[k]=true;
+                                isTaped[k]=true;
                                 spd.remove(i);
                                 if(i!=0) {
                                     i--;
@@ -129,8 +130,13 @@ public class SecondPlayer {
         }
         if (!isDefPrev) {
             for(int e = 0; e< spd.size(); e++) {
-                assert MainArea.getGameFieldCardAttack()[0] != null;
-                if (MainArea.getGameFieldCardAttack()[0].getRank() == spd.get(e).getRank() && !spd.get(e).isTrump()) {
+                Card check = new Card();
+                for(int i = 0; i<MainArea.getGameFieldCardAttack().length; i++){
+                    if(MainArea.getGameFieldCardAttack()[i]!=null){
+                        check = MainArea.getGameFieldCardAttack()[i];
+                    }
+                }
+                if (check.getRank() == spd.get(e).getRank() && !spd.get(e).isTrump()) {
                     if (notNullAttack + 1 <= FirstPlayer.getFpd().size()) {
                         if (notNullAttack <= 5) {
                             for (int i = 0; i < MainArea.getGameFieldCardAttack().length; i++) {
@@ -159,11 +165,11 @@ public class SecondPlayer {
         }
     }
 
-    public static boolean ifDefence(){
+    public static boolean ifDefence(boolean[] isDefSecondTaped){
         Card[] defenceDeck = MainArea.getGameFieldCardDefence();
         for(int e = 0; e<MainArea.getGameFieldCardAttack().length; e++){
             for(int i = 1; i<spd.size(); i++){
-                if(!MainArea.getIsDefSecondTaped()[e] && MainArea.getGameFieldCardAttack()[e]!=null && MainArea.cardComparator(spd.get(i), MainArea.getGameFieldCardAttack()[e])) {
+                if(!isDefSecondTaped[e] && MainArea.getGameFieldCardAttack()[e]!=null && MainArea.cardComparator(spd.get(i), MainArea.getGameFieldCardAttack()[e])) {
                     defenceDeck[e] = spd.get(i);
                     spd.remove(i);
                     break;

@@ -1,6 +1,10 @@
-package ru.vsu.cs.korotaev;
+package ru.vsu.cs.korotaev.LogicClasses;
 
 import javafx.scene.image.Image;
+import ru.vsu.cs.korotaev.Enums.Color;
+import ru.vsu.cs.korotaev.Enums.Phase;
+import ru.vsu.cs.korotaev.Enums.Rank;
+import ru.vsu.cs.korotaev.ObjectClasses.Card;
 
 import java.util.*;
 
@@ -10,17 +14,10 @@ public class MainArea {
     private static Color trumpCol;
     private static boolean isStartGame;
     private static int cardNum = 54;
-    private static List<Card> curPage = new ArrayList<>();
-    private static int pageNum = 0;
     private static HashMap<Rank, Integer> massMap = new HashMap<Rank, Integer>();
     private static Card[] gameFieldCardAttack = new Card[6];
     private static Card[] gameFieldCardDefence = new Card[6];
-    private static Card takenCard = new Card();
-    private static boolean cardIsTaken = false;
-    private static boolean[] isTaped = new boolean[6];
-    private static boolean[] isDefFirstTaped = new boolean[6];
-    private static boolean[] isDefSecondTaped = new boolean[6];
-    private static boolean gameIsEnded = false;
+
 
     public static void giveMassToMap() {
         massMap.put(Rank.Two, 200);
@@ -190,22 +187,6 @@ public class MainArea {
         MainArea.massMap = massMap;
     }
 
-    public static List<Card> getCurPage() {
-        return curPage;
-    }
-
-    public static void setCurPage(List<Card> curPage) {
-        MainArea.curPage = curPage;
-    }
-
-    public static int getPageNum() {
-        return pageNum;
-    }
-
-    public static void setPageNum(int pageNum) {
-        MainArea.pageNum = pageNum;
-    }
-
     public static Card[] getGameFieldCardAttack() {
         return gameFieldCardAttack;
     }
@@ -222,22 +203,6 @@ public class MainArea {
         MainArea.gameFieldCardDefence = gameFieldCardDefence;
     }
 
-    public static Card getTakenCard() {
-        return takenCard;
-    }
-
-    public static void setTakenCard(Card takenCard) {
-        MainArea.takenCard = takenCard;
-    }
-
-    public static boolean isCardIsTaken() {
-        return cardIsTaken;
-    }
-
-    public static void setCardIsTaken(boolean cardIsTaken) {
-        MainArea.cardIsTaken = cardIsTaken;
-    }
-
     public static boolean isIsStartGame() {
         return isStartGame;
     }
@@ -252,37 +217,5 @@ public class MainArea {
 
     public static void setCardNum(int cardNum) {
         MainArea.cardNum = cardNum;
-    }
-
-    public static boolean[] getIsTaped() {
-        return isTaped;
-    }
-
-    public static void setIsTaped(boolean[] isTaped) {
-        MainArea.isTaped = isTaped;
-    }
-
-    public static boolean[] getIsDefFirstTaped() {
-        return isDefFirstTaped;
-    }
-
-    public static void setIsDefFirstTaped(boolean[] isDefFirstTaped) {
-        MainArea.isDefFirstTaped = isDefFirstTaped;
-    }
-
-    public static boolean[] getIsDefSecondTaped() {
-        return isDefSecondTaped;
-    }
-
-    public static void setIsDefSecondTaped(boolean[] isDefSecondTaped) {
-        MainArea.isDefSecondTaped = isDefSecondTaped;
-    }
-
-    public static boolean isGameIsEnded() {
-        return gameIsEnded;
-    }
-
-    public static void setGameIsEnded(boolean gameIsEnded) {
-        MainArea.gameIsEnded = gameIsEnded;
     }
 }

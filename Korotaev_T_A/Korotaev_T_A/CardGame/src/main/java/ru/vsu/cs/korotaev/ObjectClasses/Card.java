@@ -1,7 +1,8 @@
-package ru.vsu.cs.korotaev;
+package ru.vsu.cs.korotaev.ObjectClasses;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import ru.vsu.cs.korotaev.Enums.Color;
+import ru.vsu.cs.korotaev.Enums.Rank;
 
 public class Card {
     private Color color;
@@ -17,7 +18,7 @@ public class Card {
         this.image = image;
     }
 
-    protected Card(){}
+    public Card(){}
 
     public Color getColor() {
         return color;

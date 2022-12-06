@@ -1,4 +1,4 @@
-package ru.vsu.cs.korotaev;
+package ru.vsu.cs.korotaev.LogicClasses;
 
 public class HeapSort {
     private static <T> void siftDown(T[] data, int[] orderValues, int i, int n) {

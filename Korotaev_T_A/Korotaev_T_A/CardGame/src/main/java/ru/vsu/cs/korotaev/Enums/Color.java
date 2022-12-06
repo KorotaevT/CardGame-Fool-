@@ -1,4 +1,4 @@
-package ru.vsu.cs.korotaev;
+package ru.vsu.cs.korotaev.Enums;
 
 public enum Color {
     Clubs,
