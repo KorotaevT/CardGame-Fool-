@@ -1,5 +1,7 @@
 package ru.vsu.cs.korotaev;
 
+import javafx.scene.image.ImageView;
+
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -37,7 +39,6 @@ public class SecondPlayer {
 
     public static void getMass() throws Exception {
         mass.clear();
-        //крашит при одной карте
         for(int e = 0; e<spd.size(); e++){
             mass.add(0);
         }
@@ -113,6 +114,38 @@ public class SecondPlayer {
         MainArea.setGameFieldCardAttack(atDeck);
         getMass();
         return isAdd;
+    }
+
+    public static boolean ifTransfer(){
+        boolean isDefPrev = false;
+        int notNullAttack = 0;
+        for (int i = 0; i < MainArea.getGameFieldCardDefence().length; i++) {
+            if (MainArea.getGameFieldCardDefence()[i] != null) {
+                isDefPrev = true;
+            }
+            if (MainArea.getGameFieldCardAttack()[i] != null) {
+                notNullAttack++;
+            }
+        }
+        if (!isDefPrev) {
+            for(int e = 0; e< spd.size(); e++) {
+                assert MainArea.getGameFieldCardAttack()[0] != null;
+                if (MainArea.getGameFieldCardAttack()[0].getRank() == spd.get(e).getRank() && !spd.get(e).isTrump()) {
+                    if (notNullAttack + 1 <= FirstPlayer.getFpd().size()) {
+                        if (notNullAttack <= 5) {
+                            for (int i = 0; i < MainArea.getGameFieldCardAttack().length; i++) {
+                                if (MainArea.getGameFieldCardAttack()[i] == null) {
+                                    MainArea.getGameFieldCardAttack()[i] = spd.get(e);
+                                    spd.remove(e);
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public static void pickUpEnemyCards() {
