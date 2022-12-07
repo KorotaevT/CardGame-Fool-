@@ -7,18 +7,10 @@ import ru.vsu.cs.korotaev.LogicClasses.MainArea;
 import java.util.*;
 
 public class SecondPlayer {
-    private static List<Card> spd = new ArrayList<>();
-    private static List<Integer> mass = new ArrayList<>();
+    private List<Card> spd = new ArrayList<>();
+    private List<Integer> mass = new ArrayList<>();
 
-    public static List<Card> getSpd() {
-        return spd;
-    }
-
-    public static void setSpd(List<Card> spd) {
-        SecondPlayer.spd = spd;
-    }
-
-    public static <Card> List<Card> convertCArrayToList(Object[] array)
+    public <Card> List<Card> convertCArrayToList(Object[] array)
     {
         List<Card> list = new ArrayList<>();
         for (Object t : array) {
@@ -28,7 +20,7 @@ public class SecondPlayer {
         return list;
     }
 
-    public static <Integer> List<Integer> convertMArrayToList(int[] array)
+    public <Integer> List<Integer> convertMArrayToList(int[] array)
     {
         List<Integer> list = new ArrayList<>();
         for (Object t : array) {
@@ -38,13 +30,13 @@ public class SecondPlayer {
         return list;
     }
 
-    public static void getMass() throws Exception {
+    public void getMass(HashMap<Rank, Integer> massMap) throws Exception {
         mass.clear();
         for(int e = 0; e<spd.size(); e++){
             mass.add(0);
         }
         for(int i = 0; i<spd.size(); i++){
-            for (HashMap.Entry<Rank, Integer> entry : MainArea.getMassMap().entrySet()) {
+            for (HashMap.Entry<Rank, Integer> entry : massMap.entrySet()) {
                 Rank key = entry.getKey();
                 Integer value = entry.getValue();
                 if(spd.get(i).getRank() == key){
@@ -65,40 +57,37 @@ public class SecondPlayer {
         mass = convertMArrayToList(sortMass);
     }
 
-    public static void ifAttack() throws Exception {
+    public Card[] ifAttack(HashMap<Rank, Integer> massMap) throws Exception {
         List<Card> attackDeck = new ArrayList<>();
         attackDeck.add(spd.get(0));
-        Card cur = spd.get(0);
         Integer curM = mass.get(0);
         spd.remove(0);
-        getMass();
+        getMass(massMap);
         for(int i = 0; i<spd.size(); i++){
             if(Objects.equals(mass.get(i), curM)) {
                 attackDeck.add(spd.get(i));
                 spd.remove(i);
-                getMass();
-                i=0;
+                getMass(massMap);
+                i=-1;
             }
         }
         Card[] attack = new Card[6];
         for(int i = 0; i<attackDeck.size(); i++){
             attack[i] = attackDeck.get(i);
         }
-        MainArea.setGameFieldCardAttack(attack);
+        return attack;
 
     }
 
-    public static boolean ifTossing(boolean[] isTaped) throws Exception {
+    public boolean ifTossing(boolean[] isTaped, Card[] gameFieldCardAttack, Card[] gameFieldCardDefence, HashMap<Rank, Integer> massMap) throws Exception {
         boolean isAdd = false;
-        Card[] defDeck = MainArea.getGameFieldCardDefence();
-        Card[] atDeck = MainArea.getGameFieldCardAttack();
         for(int i = 0; i<spd.size(); i++){
-            for (Card card : defDeck) {
+            for (Card card : gameFieldCardDefence) {
                 if (card!=null) {
                     if(spd.get(i).getRank() == card.getRank() && !spd.get(i).isTrump()){
-                        for (int k = 0; k<atDeck.length; k++) {
-                            if(atDeck[k]==null) {
-                                atDeck[k]=spd.get(i);
+                        for (int k = 0; k< gameFieldCardAttack.length; k++) {
+                            if(gameFieldCardAttack[k]==null) {
+                                gameFieldCardAttack[k]=spd.get(i);
                                 isTaped[k]=true;
                                 spd.remove(i);
                                 if(i!=0) {
@@ -112,36 +101,36 @@ public class SecondPlayer {
                 }
             }
         }
-        MainArea.setGameFieldCardAttack(atDeck);
-        getMass();
+        getMass(massMap);
         return isAdd;
     }
 
-    public static boolean ifTransfer(){
+    public boolean ifTransfer(Card[] gameFieldCardAttack, Card[] gameFieldCardDefence, List<Card> fpd){
+        List<Card> spd = getSpd();
         boolean isDefPrev = false;
         int notNullAttack = 0;
-        for (int i = 0; i < MainArea.getGameFieldCardDefence().length; i++) {
-            if (MainArea.getGameFieldCardDefence()[i] != null) {
+        for (int i = 0; i < gameFieldCardDefence.length; i++) {
+            if (gameFieldCardDefence[i] != null) {
                 isDefPrev = true;
             }
-            if (MainArea.getGameFieldCardAttack()[i] != null) {
+            if (gameFieldCardAttack[i] != null) {
                 notNullAttack++;
             }
         }
         if (!isDefPrev) {
             for(int e = 0; e< spd.size(); e++) {
                 Card check = new Card();
-                for(int i = 0; i<MainArea.getGameFieldCardAttack().length; i++){
-                    if(MainArea.getGameFieldCardAttack()[i]!=null){
-                        check = MainArea.getGameFieldCardAttack()[i];
+                for (Card card : gameFieldCardAttack) {
+                    if (card != null) {
+                        check = card;
                     }
                 }
                 if (check.getRank() == spd.get(e).getRank() && !spd.get(e).isTrump()) {
-                    if (notNullAttack + 1 <= FirstPlayer.getFpd().size()) {
+                    if (notNullAttack + 1 <= fpd.size()) {
                         if (notNullAttack <= 5) {
-                            for (int i = 0; i < MainArea.getGameFieldCardAttack().length; i++) {
-                                if (MainArea.getGameFieldCardAttack()[i] == null) {
-                                    MainArea.getGameFieldCardAttack()[i] = spd.get(e);
+                            for (int i = 0; i < gameFieldCardAttack.length; i++) {
+                                if (gameFieldCardAttack[i] == null) {
+                                    gameFieldCardAttack[i] = spd.get(e);
                                     spd.remove(e);
                                     return true;
                                 }
@@ -154,22 +143,22 @@ public class SecondPlayer {
         return false;
     }
 
-    public static void pickUpEnemyCards() {
+    public void pickUpEnemyCards(MainArea mainArea) {
         for(int i = 0; i<6; i++) {
-            if (MainArea.getGameFieldCardDefence()[i] != null) {
-               SecondPlayer.getSpd().add(MainArea.getGameFieldCardDefence()[i]);
+            if (mainArea.getGameFieldCardDefence()[i] != null) {
+               spd.add(mainArea.getGameFieldCardDefence()[i]);
             }
-            if (MainArea.getGameFieldCardAttack()[i] != null) {
-                SecondPlayer.getSpd().add(MainArea.getGameFieldCardAttack()[i]);
+            if (mainArea.getGameFieldCardAttack()[i] != null) {
+                spd.add(mainArea.getGameFieldCardAttack()[i]);
             }
         }
     }
 
-    public static boolean ifDefence(boolean[] isDefSecondTaped){
-        Card[] defenceDeck = MainArea.getGameFieldCardDefence();
-        for(int e = 0; e<MainArea.getGameFieldCardAttack().length; e++){
+    public boolean ifDefence(boolean[] isDefSecondTaped, MainArea mainArea){
+        Card[] defenceDeck = mainArea.getGameFieldCardDefence();
+        for(int e = 0; e<mainArea.getGameFieldCardAttack().length; e++){
             for(int i = 1; i<spd.size(); i++){
-                if(!isDefSecondTaped[e] && MainArea.getGameFieldCardAttack()[e]!=null && MainArea.cardComparator(spd.get(i), MainArea.getGameFieldCardAttack()[e])) {
+                if(!isDefSecondTaped[e] && mainArea.getGameFieldCardAttack()[e]!=null && mainArea.cardComparator(spd.get(i), mainArea.getGameFieldCardAttack()[e])) {
                     defenceDeck[e] = spd.get(i);
                     spd.remove(i);
                     break;
@@ -178,24 +167,36 @@ public class SecondPlayer {
         }
         int defence_num = 0;
         int at_num = 0;
-        for(int e = 0; e<MainArea.getGameFieldCardAttack().length; e++){
-            if(MainArea.getGameFieldCardAttack()[e]!=null){
+        for(int e = 0; e<mainArea.getGameFieldCardAttack().length; e++){
+            if(mainArea.getGameFieldCardAttack()[e]!=null){
                 at_num++;
             }
-            if(MainArea.getGameFieldCardDefence()[e]!=null){
+            if(mainArea.getGameFieldCardDefence()[e]!=null){
                 defence_num++;
             }
         }
         if(defence_num==at_num || spd.size()==0) {
-            MainArea.setGameFieldCardDefence(defenceDeck);
+            mainArea.setGameFieldCardDefence(defenceDeck);
             return true;
         }else {
-            pickUpEnemyCards();
+            pickUpEnemyCards(mainArea);
             return false;
         }
     }
 
-    public static void setMass(List<Integer> mass) {
-        SecondPlayer.mass = mass;
+    public List<Integer> getMass() {
+        return mass;
+    }
+
+    public void setMass(List<Integer> mass) {
+        this.mass = mass;
+    }
+
+    public List<Card> getSpd() {
+        return spd;
+    }
+
+    public void setSpd(List<Card> spd) {
+        this.spd = spd;
     }
 }

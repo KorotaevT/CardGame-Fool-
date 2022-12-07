@@ -8,54 +8,17 @@ import java.util.HashMap;
 import java.util.List;
 
 public class FirstPlayer {
-    private static List<Card> fpd = new ArrayList<>();
+    private List<Card> fpd = new ArrayList<>();
 
-    private static List<Integer> mass = new ArrayList<>();
+    private List<Integer> mass = new ArrayList<>();
 
-    public FirstPlayer(){
-
-    }
-
-    public static List<Card> getFpd() {
-        return fpd;
-    }
-
-    public static void setFpd(List<Card> fpd) {
-        FirstPlayer.fpd = fpd;
-    }
-
-
-    public static <Card> List<Card> convertCArrayToList(Object[] array)
-    {
-        List<Card> list = new ArrayList<>();
-        for (Object t : array) {
-            Card c = (Card) t;
-            list.add(c);
-        }
-        return list;
-    }
-
-    public static <Integer> List<Integer> convertMArrayToList(int[] array)
-    {
-        List<Integer> list = new ArrayList<>();
-        for (Object t : array) {
-            Integer c = (Integer) t;
-            list.add(c);
-        }
-        return list;
-    }
-
-    public static void setMass(List<Integer> mass) {
-        FirstPlayer.mass = mass;
-    }
-
-    public static void getMass(){
+    public void getMass(HashMap<Rank, Integer> massMap){
             mass.clear();
             for (int e = 0; e < fpd.size(); e++) {
                 mass.add(0);
             }
             for (int i = 0; i < fpd.size(); i++) {
-                for (HashMap.Entry<Rank, Integer> entry : MainArea.getMassMap().entrySet()) {
+                for (HashMap.Entry<Rank, Integer> entry : massMap.entrySet()) {
                     Rank key = entry.getKey();
                     Integer value = entry.getValue();
                     if (fpd.get(i).getRank() == key) {
@@ -67,7 +30,21 @@ public class FirstPlayer {
                     }
                 }
             }
+    }
 
+    public List<Card> getFpd() {
+        return fpd;
+    }
 
+    public void setFpd(List<Card> fpd) {
+        this.fpd = fpd;
+    }
+
+    public List<Integer> getMass() {
+        return mass;
+    }
+
+    public void setMass(List<Integer> mass) {
+        this.mass = mass;
     }
 }

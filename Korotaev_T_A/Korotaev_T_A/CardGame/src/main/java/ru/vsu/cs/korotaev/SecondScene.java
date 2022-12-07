@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ru.vsu.cs.korotaev.Enums.Phase;
+import ru.vsu.cs.korotaev.Enums.Rank;
 import ru.vsu.cs.korotaev.LogicClasses.MainArea;
 import ru.vsu.cs.korotaev.ObjectClasses.Card;
 import ru.vsu.cs.korotaev.ObjectClasses.FirstPlayer;
@@ -144,158 +145,142 @@ public class SecondScene {
     @FXML
     Button endBut;
 
-    private static int pageNum = 0;
-    private static Card takenCard = new Card();
-    private static boolean cardIsTaken = false;
-    private static boolean[] isTaped = new boolean[6];
-    private static boolean[] isDefFirstTaped = new boolean[6];
-    private static boolean[] isDefSecondTaped = new boolean[6];
-    private static boolean gameIsEnded = false;
+    private int pageNum = 0;
+    private Card takenCard = new Card();
+    private boolean cardIsTaken = false;
+    private boolean[] isTaped = new boolean[6];
+    private boolean[] isDefFirstTaped = new boolean[6];
+    private boolean[] isDefSecondTaped = new boolean[6];
+    private boolean gameIsEnded = false;
+    private ImageView[] gameCardSlots;
+    private ImageView[] gameCardSlotsDefFirst;
+    private ImageView[] gameCardSlotsDefSecond;
+    private ImageView[] cardSlots;
+    private MainArea mainArea;
+    private FirstPlayer firstPlayer;
+    private SecondPlayer secondPlayer;
 
     @FXML
-    protected void nextButClick() throws Exception {
-        if (!checkout()) {
+    private void nextButClick() throws Exception {
+        if (!checkEqNum()) {
             return;
         }
-        if (MainArea.getPhase() == Phase.FirstTossing) {
+        if (mainArea.getPhase() == Phase.FirstTossing) {
             if (!checkToss()) {
                 return;
             }
         }
-        Phase thisPhase = MainArea.getPhase();
-        List<Phase> l = new ArrayList<>(Arrays.asList(Phase.values()));
-        for (int i = 0; i < l.size(); i++) {
-            if (l.get(i) == thisPhase) {
-                if (i == l.size() - 1) {
-                    thisPhase = l.get(0);
-                    MainArea.setPhase(l.get(0));
-                    break;
-                } else {
-                    thisPhase = l.get(i + 1);
-                    MainArea.setPhase(l.get(i + 1));
-                    break;
-                }
-
-            }
-        }
+        Phase thisPhase = mainArea.getPhase();
+        thisPhase = phaseChanger(thisPhase);
         if (thisPhase == Phase.FirstAttack) {
-            endGame();
-            visBut();
-            phaseBack.setFill(Color.LAWNGREEN);
-            phaseText.setText("Атака");
-            ImageView[] gameCardSlots = {gameCardSlot_1, gameCardSlot_2, gameCardSlot_3, gameCardSlot_4, gameCardSlot_5, gameCardSlot_6};
-            ImageView[] gameCardSlotsDefFirst = {gameCardSlotDefFirst_1, gameCardSlotDefFirst_2, gameCardSlotDefFirst_3, gameCardSlotDefFirst_4, gameCardSlotDefFirst_5, gameCardSlotDefFirst_6};
-            for (ImageView cardSlot : gameCardSlots) {
-                cardSlot.setDisable(false);
-            }
-            for (ImageView cardSlot : gameCardSlotsDefFirst) {
-                cardSlot.setDisable(true);
-            }
-            endGame();
+            firstAttackNextButTapped();
         } else if (thisPhase == Phase.SecondDefence) {
-            if(SecondPlayer.ifTransfer()){
-                phaseBack.setFill(Color.RED);
-                phaseText.setText("Перевод");
-                PauseTransition pause = new PauseTransition(Duration.seconds(1));
-                pause.setOnFinished(event -> {
-                    endGame();
-                    ImageView[] gameCardSlots = {gameCardSlot_1, gameCardSlot_2, gameCardSlot_3, gameCardSlot_4, gameCardSlot_5, gameCardSlot_6};
-                    ImageView[] gameCardSlotsDefFirst = {gameCardSlotDefFirst_1, gameCardSlotDefFirst_2, gameCardSlotDefFirst_3, gameCardSlotDefFirst_4, gameCardSlotDefFirst_5, gameCardSlotDefFirst_6};
-                    for (ImageView cardSlot : gameCardSlots) {
-                        cardSlot.setDisable(false);
-                    }
-                    for (ImageView cardSlot : gameCardSlotsDefFirst) {
-                        cardSlot.setDisable(true);
-                    }
-                    try {
-                        enemyStepVisual();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    updatePage(pageNum);
-                    MainArea.setPhase(Phase.SecondAttack);
-                    endGame();
-                    try {
-                        nextButClick();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-                pause.play();
-                return;
-            }
-            endGame();
-            deVisBut();
-            phaseBack.setFill(Color.RED);
-            phaseText.setText("Защита");
-            if (SecondPlayer.ifDefence(isDefSecondTaped)) {
-                endGame();
-                PauseTransition pause = new PauseTransition(Duration.seconds(1));
-                pause.setOnFinished(event -> {
-                    try {
-                        enemyStepVisual();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                });
-                pause.play();
-
-                PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
-                pause2.setOnFinished(event -> {
-                    try {
-                        nextButClick();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    visBut();
-                });
-                pause2.play();
-                endGame();
-            } else {
-                endGame();
-                Arrays.fill(MainArea.getGameFieldCardDefence(), null);
-                Arrays.fill(MainArea.getGameFieldCardAttack(), null);
-                MainArea.distribution(FirstPlayer.getFpd());
-                MainArea.distribution(SecondPlayer.getSpd());
-                FirstPlayer.getMass();
-                SecondPlayer.getMass();
-                MainArea.setPhase(Phase.SecondTossing);
-                PauseTransition pause = new PauseTransition(Duration.seconds(1));
-                pause.setOnFinished(event -> {
-                    endClearGameField();
-                    updatePage(pageNum);
-                });
-                pause.play();
-
-                PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
-                pause2.setOnFinished(event -> {
-                    try {
-                        nextButClick();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    visBut();
-                });
-                pause2.play();
-                endGame();
-            }
-            endGame();
+            secondDefenceNextButTapped();
         } else if (thisPhase == Phase.FirstTossing) {
-            visBut();
-            phaseBack.setFill(Color.LAWNGREEN);
-            phaseText.setText("Добавить");
+            firstTossingNextButTapped();
         } else if (thisPhase == Phase.SecondAttack) {
-            endGame();
-            deVisBut();
+            secondAttackNextButTapped();
+        } else if (thisPhase == Phase.FirstDefence) {
+            firstDefenceNextButTapped();
+        } else if (thisPhase == Phase.SecondTossing) {
+            secondTossingNextButTapped();
+        }
+    }
+
+    @FXML
+    private void firstAttackNextButTapped() {
+        visBut();
+        phaseBack.setFill(Color.LAWNGREEN);
+        phaseText.setText("Атака");
+        defSlotsDis();
+        endGame();
+    }
+
+    @FXML
+    private void firstDefenceNextButTapped() {
+        phaseBack.setFill(Color.LAWNGREEN);
+        phaseText.setText("Защита");
+        attSlotsDis();
+        endGame();
+    }
+
+    @FXML
+    private void firstTossingNextButTapped() {
+        visBut();
+        phaseBack.setFill(Color.LAWNGREEN);
+        phaseText.setText("Добавить");
+        defSlotsDis();
+        endGame();
+    }
+
+    @FXML
+    private void secondAttackNextButTapped() throws Exception {
+        deVisBut();
+        phaseBack.setFill(Color.RED);
+        phaseText.setText("Атака");
+        mainArea.setGameFieldCardAttack(secondPlayer.ifAttack(mainArea.getMassMap()));
+        endGame();
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        pause.setOnFinished(event -> {
+            try {
+                enemyStepVisual();
+                endGame();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        pause.play();
+
+        PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
+        pause2.setOnFinished(event -> {
+            try {
+                nextButClick();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            visBut();
+        });
+        pause2.play();
+        updatePage(pageNum);
+        endGame();
+    }
+
+    @FXML
+    private void secondDefenceNextButTapped() throws Exception {
+        if (secondPlayer.ifTransfer(mainArea.getGameFieldCardAttack(), mainArea.getGameFieldCardDefence(), firstPlayer.getFpd())) {
             phaseBack.setFill(Color.RED);
-            phaseText.setText("Атака");
-            SecondPlayer.ifAttack();
+            phaseText.setText("Перевод");
+            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            pause.setOnFinished(event -> {
+                endGame();
+                defSlotsDis();
+                try {
+                    enemyStepVisual();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                updatePage(pageNum);
+                mainArea.setPhase(Phase.SecondAttack);
+                endGame();
+                try {
+                    nextButClick();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            pause.play();
+            return;
+        }
+        endGame();
+        deVisBut();
+        phaseBack.setFill(Color.RED);
+        phaseText.setText("Защита");
+        if (secondPlayer.ifDefence(isDefSecondTaped, mainArea)) {
             endGame();
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
             pause.setOnFinished(event -> {
                 try {
                     enemyStepVisual();
-                    endGame();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -312,112 +297,155 @@ public class SecondScene {
                 visBut();
             });
             pause2.play();
-            updatePage(pageNum);
             endGame();
-        } else if (thisPhase == Phase.FirstDefence) {
-            phaseBack.setFill(Color.LAWNGREEN);
-            phaseText.setText("Защита");
-            ImageView[] gameCardSlots = {gameCardSlot_1, gameCardSlot_2, gameCardSlot_3, gameCardSlot_4, gameCardSlot_5, gameCardSlot_6};
-            ImageView[] gameCardSlotsDefFirst = {gameCardSlotDefFirst_1, gameCardSlotDefFirst_2, gameCardSlotDefFirst_3, gameCardSlotDefFirst_4, gameCardSlotDefFirst_5, gameCardSlotDefFirst_6};
-            for (ImageView cardSlot : gameCardSlots) {
-                cardSlot.setDisable(true);
-            }
-            for (ImageView cardSlot : gameCardSlotsDefFirst) {
-                cardSlot.setDisable(false);
-            }
+        } else {
             endGame();
-        } else if (thisPhase == Phase.SecondTossing) {
-            phaseBack.setFill(Color.RED);
-            phaseText.setText("Добавить");
-            deVisBut();
+            Arrays.fill(mainArea.getGameFieldCardDefence(), null);
+            Arrays.fill(mainArea.getGameFieldCardAttack(), null);
+            mainArea.distribution(firstPlayer.getFpd());
+            mainArea.distribution(secondPlayer.getSpd());
+            firstPlayer.getMass(mainArea.getMassMap());
+            secondPlayer.getMass(mainArea.getMassMap());
+            mainArea.setPhase(Phase.SecondTossing);
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
             pause.setOnFinished(event -> {
-                try {
-                    if (!SecondPlayer.ifTossing(isTaped)) {
-                        endClearGameField();
-                        nextButClick();
-                        Arrays.fill(MainArea.getGameFieldCardDefence(), null);
-                        Arrays.fill(MainArea.getGameFieldCardAttack(), null);
-                        MainArea.distribution(SecondPlayer.getSpd());
-                        MainArea.distribution(FirstPlayer.getFpd());
-                        FirstPlayer.getMass();
-                        SecondPlayer.getMass();
-                        updatePage(pageNum);
-                        endGame();
-                    } else {
-                        MainArea.setPhase(Phase.FirstDefence);
-                        phaseBack.setFill(Color.LAWNGREEN);
-                        phaseText.setText("Защита");
-                        visBut();
-                        ImageView[] gameCardSlots = {gameCardSlot_1, gameCardSlot_2, gameCardSlot_3, gameCardSlot_4, gameCardSlot_5, gameCardSlot_6};
-                        ImageView[] gameCardSlotsDefFirst = {gameCardSlotDefFirst_1, gameCardSlotDefFirst_2, gameCardSlotDefFirst_3, gameCardSlotDefFirst_4, gameCardSlotDefFirst_5, gameCardSlotDefFirst_6};
-                        for (ImageView cardSlot : gameCardSlots) {
-                            cardSlot.setDisable(true);
-                        }
-                        for (ImageView cardSlot : gameCardSlotsDefFirst) {
-                            cardSlot.setDisable(false);
-                        }
-                        enemyStepVisual();
+                endClearGameField();
+                updatePage(pageNum);
+            });
+            pause.play();
 
-                        updatePage(pageNum);
-                        endGame();
-                    }
+            PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
+            pause2.setOnFinished(event -> {
+                try {
+                    nextButClick();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                visBut();
             });
-            pause.play();
+            pause2.play();
+            endGame();
         }
+        endGame();
     }
 
     @FXML
-    private void cardsTransfer() throws Exception {
-        ImageView[] cardSlots = {cardSlot_1, cardSlot_2, cardSlot_3, cardSlot_4, cardSlot_5, cardSlot_6};
-        ImageView[] gameCardSlots = {gameCardSlot_1, gameCardSlot_2, gameCardSlot_3, gameCardSlot_4, gameCardSlot_5, gameCardSlot_6};
-        ImageView[] gameCardSlotsDefFirst = {gameCardSlotDefFirst_1, gameCardSlotDefFirst_2, gameCardSlotDefFirst_3, gameCardSlotDefFirst_4, gameCardSlotDefFirst_5, gameCardSlotDefFirst_6};
+    private void secondTossingNextButTapped() {
+        phaseBack.setFill(Color.RED);
+        phaseText.setText("Добавить");
+        deVisBut();
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        pause.setOnFinished(event -> {
+            try {
+                if (!secondPlayer.ifTossing(isTaped, mainArea.getGameFieldCardAttack(), mainArea.getGameFieldCardDefence(), mainArea.getMassMap())) {
+                    endClearGameField();
+                    nextButClick();
+                    Arrays.fill(mainArea.getGameFieldCardDefence(), null);
+                    Arrays.fill(mainArea.getGameFieldCardAttack(), null);
+                    mainArea.distribution(secondPlayer.getSpd());
+                    mainArea.distribution(firstPlayer.getFpd());
+                    firstPlayer.getMass(mainArea.getMassMap());
+                    secondPlayer.getMass(mainArea.getMassMap());
+                    updatePage(pageNum);
+                    endGame();
+                } else {
+                    mainArea.setPhase(Phase.FirstDefence);
+                    phaseBack.setFill(Color.LAWNGREEN);
+                    phaseText.setText("Защита");
+                    visBut();
+                    attSlotsDis();
+                    enemyStepVisual();
+
+                    updatePage(pageNum);
+                    endGame();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        pause.play();
+    }
+
+    @FXML
+    private Phase phaseChanger(Phase thisPhase) {
+        List<Phase> l = new ArrayList<>(Arrays.asList(Phase.values()));
+        Phase nPhase = thisPhase;
+        for (int i = 0; i < l.size(); i++) {
+            if (l.get(i) == thisPhase) {
+                if (i == l.size() - 1) {
+                    nPhase = l.get(0);
+                    mainArea.setPhase(l.get(0));
+                    break;
+                } else {
+                    nPhase = l.get(i + 1);
+                    mainArea.setPhase(l.get(i + 1));
+                    break;
+                }
+
+            }
+        }
+        return nPhase;
+    }
+
+    @FXML
+    private void defSlotsDis() {
         for (ImageView cardSlot : gameCardSlots) {
             cardSlot.setDisable(false);
         }
         for (ImageView cardSlot : gameCardSlotsDefFirst) {
             cardSlot.setDisable(true);
         }
+    }
+
+    @FXML
+    private void attSlotsDis() {
+        for (ImageView cardSlot : gameCardSlots) {
+            cardSlot.setDisable(true);
+        }
+        for (ImageView cardSlot : gameCardSlotsDefFirst) {
+            cardSlot.setDisable(false);
+        }
+    }
+
+    @FXML
+    private void cardsTransfer() throws Exception {
         endGame();
         boolean isDefPrev = false;
         int notNullAttack = 0;
-        for (int i = 0; i < MainArea.getGameFieldCardDefence().length; i++) {
-            if (MainArea.getGameFieldCardDefence()[i] != null) {
+        for (int i = 0; i < mainArea.getGameFieldCardDefence().length; i++) {
+            if (mainArea.getGameFieldCardDefence()[i] != null) {
                 isDefPrev = true;
             }
-            if (MainArea.getGameFieldCardAttack()[i] != null) {
+            if (mainArea.getGameFieldCardAttack()[i] != null) {
                 notNullAttack++;
             }
         }
         int indexTakenCard = 0;
-        for (int i = 0; i<FirstPlayer.getFpd().size(); i++){
-            if(FirstPlayer.getFpd().get(i)==takenCard){
+        for (int i = 0; i < firstPlayer.getFpd().size(); i++) {
+            if (firstPlayer.getFpd().get(i) == takenCard) {
                 indexTakenCard = i;
                 break;
             }
         }
-        if (MainArea.getPhase() == Phase.FirstDefence && !isDefPrev) {
-            assert MainArea.getGameFieldCardAttack()[0] != null;
-            if (MainArea.getGameFieldCardAttack()[0].getRank() == takenCard.getRank()) {
-                if (notNullAttack + 1 <= SecondPlayer.getSpd().size()) {
+        if (mainArea.getPhase() == Phase.FirstDefence && !isDefPrev) {
+            assert mainArea.getGameFieldCardAttack()[0] != null;
+            if (mainArea.getGameFieldCardAttack()[0].getRank() == takenCard.getRank()) {
+                if (notNullAttack + 1 <= secondPlayer.getSpd().size()) {
                     if (notNullAttack <= 5) {
-                        for (int i = 0; i < MainArea.getGameFieldCardAttack().length; i++) {
-                            if (MainArea.getGameFieldCardAttack()[i] == null) {
-                                MainArea.getGameFieldCardAttack()[i] = takenCard;
+                        for (int i = 0; i < mainArea.getGameFieldCardAttack().length; i++) {
+                            if (mainArea.getGameFieldCardAttack()[i] == null) {
+                                mainArea.getGameFieldCardAttack()[i] = takenCard;
                                 enemyStepVisual();
                                 takenCard = new Card();
                                 cardIsTaken = false;
-                                for(ImageView cardSlot: cardSlots){
-                                    if(Integer.parseInt(cardSlot.getId().split("_")[1])==(indexTakenCard-pageNum*6)+1){
+                                for (ImageView cardSlot : cardSlots) {
+                                    if (Integer.parseInt(cardSlot.getId().split("_")[1]) == (indexTakenCard - pageNum * 6) + 1) {
                                         cardSlot.setOpacity(1);
                                     }
                                 }
-                                FirstPlayer.getFpd().remove(indexTakenCard);
+                                firstPlayer.getFpd().remove(indexTakenCard);
                                 updatePage(pageNum);
-                                MainArea.setPhase(Phase.FirstAttack);
+                                mainArea.setPhase(Phase.FirstAttack);
                                 endGame();
                                 nextButClick();
                                 break;
@@ -432,24 +460,23 @@ public class SecondScene {
 
     @FXML
     private void pickUpCards() throws Exception {
-
-        if(MainArea.getPhase()==Phase.FirstDefence){
-        for(int i = 0; i<6; i++) {
-            if (MainArea.getGameFieldCardDefence()[i] != null) {
-                FirstPlayer.getFpd().add(MainArea.getGameFieldCardDefence()[i]);
+        if (mainArea.getPhase() == Phase.FirstDefence) {
+            for (int i = 0; i < 6; i++) {
+                if (mainArea.getGameFieldCardDefence()[i] != null) {
+                    firstPlayer.getFpd().add(mainArea.getGameFieldCardDefence()[i]);
+                }
+                if (mainArea.getGameFieldCardAttack()[i] != null) {
+                    firstPlayer.getFpd().add(mainArea.getGameFieldCardAttack()[i]);
+                }
             }
-            if (MainArea.getGameFieldCardAttack()[i] != null) {
-                FirstPlayer.getFpd().add(MainArea.getGameFieldCardAttack()[i]);
-            }
-        }
-            Arrays.fill(MainArea.getGameFieldCardDefence(), null);
-            Arrays.fill(MainArea.getGameFieldCardAttack(), null);
-            MainArea.distribution(SecondPlayer.getSpd());
-            MainArea.distribution(FirstPlayer.getFpd());
-            FirstPlayer.getMass();
-            SecondPlayer.getMass();
+            Arrays.fill(mainArea.getGameFieldCardDefence(), null);
+            Arrays.fill(mainArea.getGameFieldCardAttack(), null);
+            mainArea.distribution(secondPlayer.getSpd());
+            mainArea.distribution(firstPlayer.getFpd());
+            firstPlayer.getMass(mainArea.getMassMap());
+            secondPlayer.getMass(mainArea.getMassMap());
             updatePage(pageNum);
-            MainArea.setPhase(Phase.FirstTossing);
+            mainArea.setPhase(Phase.FirstTossing);
             nextButClick();
         }
     }
@@ -458,115 +485,102 @@ public class SecondScene {
     private boolean checkToss() throws Exception {
         int counterAt = 0;
         int counterDef = 0;
-        for(int i =0; i<6; i++){
-            if(MainArea.getGameFieldCardDefence()[i]!=null){
+        for (int i = 0; i < 6; i++) {
+            if (mainArea.getGameFieldCardDefence()[i] != null) {
                 counterDef++;
             }
-            if(MainArea.getGameFieldCardAttack()[i]!=null){
+            if (mainArea.getGameFieldCardAttack()[i] != null) {
                 counterAt++;
             }
         }
-        if(counterDef==counterAt){
+        if (counterDef == counterAt) {
             endClearGameField();
-            Arrays.fill(MainArea.getGameFieldCardDefence(), null);
-            Arrays.fill(MainArea.getGameFieldCardAttack(), null);
-            MainArea.distribution(FirstPlayer.getFpd());
-            MainArea.distribution(SecondPlayer.getSpd());
-            FirstPlayer.getMass();
-            SecondPlayer.getMass();
+            Arrays.fill(mainArea.getGameFieldCardDefence(), null);
+            Arrays.fill(mainArea.getGameFieldCardAttack(), null);
+            mainArea.distribution(firstPlayer.getFpd());
+            mainArea.distribution(secondPlayer.getSpd());
+            firstPlayer.getMass(mainArea.getMassMap());
+            secondPlayer.getMass(mainArea.getMassMap());
             updatePage(pageNum);
             return true;
-        }else {
-            MainArea.setPhase(Phase.FirstAttack);
+        } else {
+            mainArea.setPhase(Phase.FirstAttack);
             return true;
         }
     }
 
     @FXML
-    private boolean checkout(){
-        Card[] a = MainArea.getGameFieldCardAttack();
-        Card[] b = MainArea.getGameFieldCardDefence();
+    private boolean checkEqNum() {
+        Card[] a = mainArea.getGameFieldCardAttack();
+        Card[] b = mainArea.getGameFieldCardDefence();
         int num1 = 0;
         int num2 = 0;
-        for(Card el: a){
-            if(el!=null){
+        for (Card el : a) {
+            if (el != null) {
                 num1++;
             }
         }
-        for(Card el1: b){
-            if(el1!=null){
+        for (Card el1 : b) {
+            if (el1 != null) {
                 num2++;
             }
         }
-        if(MainArea.getPhase()==Phase.FirstDefence) {
+        if (mainArea.getPhase() == Phase.FirstDefence) {
             return num1 == num2;
-        }else if(MainArea.getPhase()==Phase.FirstAttack){
-                return num1>0;
+        } else if (mainArea.getPhase() == Phase.FirstAttack) {
+            return num1 > 0;
         }
         return true;
     }
 
     @FXML
-    private void endGame(){
-        if(MainArea.getCardNum()==0){
+    private void endGame() {
+        if (mainArea.getCardNum() == 0) {
             trumpCard.setImage(null);
-            if(FirstPlayer.getFpd().size()==0){
+            if (firstPlayer.getFpd().size() == 0) {
                 deVisBut();
                 phaseBack.setFill(Color.LAWNGREEN);
                 phaseText.setText("Победа");
-                gameIsEnded = true;
-                endBut.setVisible(true);
-                endBut.setDisable(false);
-                MainArea.setIsStartGame(false);
-                FirstPlayer.setFpd(new ArrayList<>());
-                FirstPlayer.setMass(new ArrayList<>());
-                SecondPlayer.setSpd(new ArrayList<>());
-                SecondPlayer.setMass(new ArrayList<>());
-                MainArea.setDeck(MainArea.createDeck());
-                MainArea.setPhase(Phase.FirstAttack);
-                MainArea.setCardNum(54);
-                pageNum = 0;
-                MainArea.setGameFieldCardAttack(new Card[6]);
-                MainArea.setGameFieldCardDefence(new Card[6]);
-                takenCard = new Card();
-                cardIsTaken = false;
-                isTaped = new boolean[6];
-                isDefFirstTaped = new boolean[6];
-                isDefSecondTaped = new boolean[6];
+                endSettings();
                 return;
             }
-            if(SecondPlayer.getSpd().size()==0){
+            if (secondPlayer.getSpd().size() == 0) {
                 deVisBut();
                 phaseBack.setFill(Color.RED);
                 phaseText.setText("Поражение");
-                gameIsEnded = true;
-                endBut.setVisible(true);
-                endBut.setDisable(false);
-                MainArea.setIsStartGame(false);
-                FirstPlayer.setFpd(new ArrayList<>());
-                FirstPlayer.setMass(new ArrayList<>());
-                SecondPlayer.setSpd(new ArrayList<>());
-                SecondPlayer.setMass(new ArrayList<>());
-                MainArea.setDeck(MainArea.createDeck());
-                MainArea.setPhase(Phase.FirstAttack);
-                MainArea.setCardNum(54);
-                pageNum = 0;
-                MainArea.setGameFieldCardAttack(new Card[6]);
-                MainArea.setGameFieldCardDefence(new Card[6]);
-                takenCard = new Card();
-                cardIsTaken = false;
-                isTaped = new boolean[6];
-                isDefFirstTaped = new boolean[6];
-                isDefSecondTaped = new boolean[6];
+                endSettings();
             }
         }
+    }
+
+    @FXML
+    private void endSettings() {
+        gameIsEnded = true;
+        endBut.setVisible(true);
+        endBut.setDisable(false);
+        mainArea.setStartGame(false);
+        firstPlayer.setFpd(new ArrayList<>());
+        firstPlayer.setMass(new ArrayList<>());
+        secondPlayer.setSpd(new ArrayList<>());
+        secondPlayer.setMass(new ArrayList<>());
+        mainArea.setDeck(mainArea.createDeck());
+        mainArea.setPhase(Phase.FirstAttack);
+        mainArea.setCardNum(54);
+        pageNum = 0;
+        mainArea.setGameFieldCardAttack(new Card[6]);
+        mainArea.setGameFieldCardDefence(new Card[6]);
+        takenCard = new Card();
+        cardIsTaken = false;
+        isTaped = new boolean[6];
+        isDefFirstTaped = new boolean[6];
+        isDefSecondTaped = new boolean[6];
     }
 
     @FXML
     private void endGameBut(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
         Scene scene = new Scene(parent, 1300, 750);
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("CardGame");
         ImageView imageView = (ImageView) parent.getChildrenUnmodifiable().get(0);
         Image image = new Image("file:Sprites/BackGround.jpg");
@@ -580,22 +594,19 @@ public class SecondScene {
     }
 
     @FXML
-    private void endClearGameField(){
-        ImageView[] gameCardSlots = {gameCardSlot_1, gameCardSlot_2, gameCardSlot_3, gameCardSlot_4, gameCardSlot_5, gameCardSlot_6};
-        ImageView[] gameCardSlotsDefFirst = {gameCardSlotDefFirst_1, gameCardSlotDefFirst_2, gameCardSlotDefFirst_3, gameCardSlotDefFirst_4, gameCardSlotDefFirst_5, gameCardSlotDefFirst_6};
-        ImageView[] gameCardSlotsDefSecond = {gameCardSlotDefSecond_1, gameCardSlotDefSecond_2, gameCardSlotDefSecond_3, gameCardSlotDefSecond_4, gameCardSlotDefSecond_5, gameCardSlotDefSecond_6};
+    private void endClearGameField() {
         Image thisImage = new Image("file:Sprites/tracing.png");
-        for (ImageView el: gameCardSlots){
+        for (ImageView el : gameCardSlots) {
             String s = el.getId().split("_")[1];
             isTaped[Integer.parseInt(s) - 1] = false;
             el.setImage(thisImage);
         }
-        for (ImageView el1: gameCardSlotsDefFirst){
+        for (ImageView el1 : gameCardSlotsDefFirst) {
             String s = el1.getId().split("_")[1];
             isDefFirstTaped[Integer.parseInt(s) - 1] = false;
             el1.setImage(null);
         }
-        for (ImageView el2: gameCardSlotsDefSecond){
+        for (ImageView el2 : gameCardSlotsDefSecond) {
             String s = el2.getId().split("_")[1];
             isDefSecondTaped[Integer.parseInt(s) - 1] = false;
             el2.setImage(null);
@@ -603,90 +614,91 @@ public class SecondScene {
     }
 
     @FXML
-    protected void giveCards() throws Exception {
-        if(!MainArea.isIsStartGame()) {
-            FirstPlayer.setFpd(MainArea.distribution(FirstPlayer.getFpd()));
-            SecondPlayer.setSpd(MainArea.distribution(SecondPlayer.getSpd()));
-            FirstPlayer.getMass();
-            SecondPlayer.getMass();
+    private void giveCards() throws Exception {
+        mainArea = new MainArea();
+        firstPlayer = new FirstPlayer();
+        secondPlayer = new SecondPlayer();
+        if (!mainArea.isStartGame()) {
+            gameCardSlots = new ImageView[]{gameCardSlot_1, gameCardSlot_2, gameCardSlot_3, gameCardSlot_4, gameCardSlot_5, gameCardSlot_6};
+            gameCardSlotsDefFirst = new ImageView[]{gameCardSlotDefFirst_1, gameCardSlotDefFirst_2, gameCardSlotDefFirst_3, gameCardSlotDefFirst_4, gameCardSlotDefFirst_5, gameCardSlotDefFirst_6};
+            gameCardSlotsDefSecond = new ImageView[]{gameCardSlotDefSecond_1, gameCardSlotDefSecond_2, gameCardSlotDefSecond_3, gameCardSlotDefSecond_4, gameCardSlotDefSecond_5, gameCardSlotDefSecond_6};
+            cardSlots = new ImageView[]{cardSlot_1, cardSlot_2, cardSlot_3, cardSlot_4, cardSlot_5, cardSlot_6};
+            mainArea.randomDeck();
+            mainArea.giveMassToMap();
+            firstPlayer.setFpd(mainArea.distribution(firstPlayer.getFpd()));
+            secondPlayer.setSpd(mainArea.distribution(secondPlayer.getSpd()));
+            firstPlayer.getMass(mainArea.getMassMap());
             updatePage(pageNum);
-            SecondPlayer.getMass();
-            FirstPlayer.getMass();
-            MainArea.setIsStartGame(true);
-            deckNum.setText(String.valueOf(MainArea.getCardNum()));
+            mainArea.setStartGame(true);
+            deckNum.setText(String.valueOf(mainArea.getCardNum()));
             deckNum.setVisible(true);
             deckNumText.setVisible(false);
-            enemyDeckNum.setText(String.valueOf(SecondPlayer.getSpd().size()));
+            enemyDeckNum.setText(String.valueOf(secondPlayer.getSpd().size()));
             enemyDeckNum.setVisible(true);
             enemyDeckCircle.setVisible(true);
             prevBut1.setVisible(true);
             nextBut1.setVisible(true);
-            Image trumpIm = MainArea.getDeck().get(MainArea.getDeck().size()-1).getImage();
+            Image trumpIm = mainArea.getDeck().get(mainArea.getDeck().size() - 1).getImage();
             trumpCard.setImage(trumpIm);
             visBut();
             phaseText.setVisible(true);
             phaseBack.setVisible(true);
             Random rand = new Random();
-            int n = rand.nextInt(2)+1;
-            if(n==1){
-                MainArea.setPhase(Phase.SecondTossing);
+            int n = rand.nextInt(2) + 1;
+            if (n == 1) {
+                mainArea.setPhase(Phase.SecondTossing);
                 nextButClick();
-            }else {
-                MainArea.setPhase(Phase.FirstTossing);
+            } else {
+                mainArea.setPhase(Phase.FirstTossing);
                 nextButClick();
             }
         }
+
     }
 
 
-
     @FXML
-    protected void nextPageBut(){
-        if(pageNum<8) {
+    private void nextPageBut() {
+        if (pageNum < 8) {
             pageNum = pageNum + 1;
-        }else{
+        } else {
             pageNum = 0;
         }
         updatePage(pageNum);
     }
 
 
-
     @FXML
-    protected void prevPageBut(){
-        if(pageNum>0) {
+    private void prevPageBut() {
+        if (pageNum > 0) {
             pageNum = pageNum - 1;
-        }else{
+        } else {
             pageNum = 8;
         }
         updatePage(pageNum);
     }
 
     @FXML
-    protected void enemyStepVisual() throws InterruptedException {
-        ImageView[] gameCardSlots = {gameCardSlot_1, gameCardSlot_2, gameCardSlot_3, gameCardSlot_4, gameCardSlot_5, gameCardSlot_6};
-        ImageView[] gameCardSlotsDefFirst = {gameCardSlotDefFirst_1, gameCardSlotDefFirst_2, gameCardSlotDefFirst_3, gameCardSlotDefFirst_4, gameCardSlotDefFirst_5, gameCardSlotDefFirst_6};
-        ImageView[] gameCardSlotsDefSecond = {gameCardSlotDefSecond_1, gameCardSlotDefSecond_2, gameCardSlotDefSecond_3, gameCardSlotDefSecond_4, gameCardSlotDefSecond_5, gameCardSlotDefSecond_6};
-        Card[] attack = MainArea.getGameFieldCardAttack();
-        Card[] deff = MainArea.getGameFieldCardDefence();
+    private void enemyStepVisual() throws InterruptedException {
+        Card[] attack = mainArea.getGameFieldCardAttack();
+        Card[] deff = mainArea.getGameFieldCardDefence();
         ImageView[] curDef = new ImageView[6];
         boolean[] curTaped = new boolean[6];
-        Phase a = MainArea.getPhase();
-        if(MainArea.getPhase()==Phase.SecondAttack || MainArea.getPhase()==Phase.FirstDefence){
+        if (mainArea.getPhase() == Phase.SecondAttack || mainArea.getPhase() == Phase.FirstDefence) {
             curDef = gameCardSlotsDefFirst;
             curTaped = isDefFirstTaped;
-        }else if(MainArea.getPhase()==Phase.SecondDefence || MainArea.getPhase()==Phase.SecondTossing){
+        } else if (mainArea.getPhase() == Phase.SecondDefence || mainArea.getPhase() == Phase.SecondTossing) {
             curDef = gameCardSlotsDefSecond;
             curTaped = isDefSecondTaped;
         }
-        for(int i = 0; i<attack.length; i++){
-            if(attack[i]!=null) {
+        for (int i = 0; i < attack.length; i++) {
+            if (attack[i] != null) {
                 gameCardSlots[i].setImage(attack[i].getImage());
                 isTaped[i] = true;
             }
         }
-        for(int i = 0; i<deff.length; i++){
-            if(deff[i]!=null) {
+        for (int i = 0; i < deff.length; i++) {
+            if (deff[i] != null) {
                 curDef[i].setImage(deff[i].getImage());
                 curTaped[i] = true;
             }
@@ -694,23 +706,23 @@ public class SecondScene {
     }
 
     @FXML
-    private void visBut(){
+    private void visBut() {
         nextBut.setVisible(true);
         reverseBut.setVisible(true);
         takeCardBut.setVisible(true);
     }
 
     @FXML
-    private void deVisBut(){
+    private void deVisBut() {
         nextBut.setVisible(false);
         reverseBut.setVisible(false);
         takeCardBut.setVisible(false);
     }
 
     @FXML
-    protected void updatePage(int pageNum){
+    private void updatePage(int pageNum) {
         try {
-            List<Card> list = FirstPlayer.getFpd();
+            List<Card> list = firstPlayer.getFpd();
             List<Card> curList = new ArrayList<>();
             for (int e = pageNum * 6; e < pageNum * 6 + 6; e++) {
                 if (e < list.size()) {
@@ -720,18 +732,18 @@ public class SecondScene {
             AnchorPane thisAnchor = (AnchorPane) test.getChildren().get(6);
             for (int i = 0; i < 6; i++) {
                 ImageView thisView = (ImageView) thisAnchor.getChildren().get(i);
-                ImageView thisViewGame = (ImageView) test.getChildren().get(i+11);
-                ImageView thisViewGameDef = (ImageView) test.getChildren().get(i+17);
-                ImageView thisViewGameDefEnemy = (ImageView) test.getChildren().get(i+23);
+                ImageView thisViewGame = (ImageView) test.getChildren().get(i + 11);
+                ImageView thisViewGameDef = (ImageView) test.getChildren().get(i + 17);
+                ImageView thisViewGameDefEnemy = (ImageView) test.getChildren().get(i + 23);
                 Image thisImage = new Image("file:Sprites/tracing.png");
                 thisView.setImage(thisImage);
-                if(!isTaped[i]) {
+                if (!isTaped[i]) {
                     thisViewGame.setImage(thisImage);
                 }
-                if(!isDefFirstTaped[i]) {
+                if (!isDefFirstTaped[i]) {
                     thisViewGameDef.setImage(null);
                 }
-                if(!isDefSecondTaped[i]) {
+                if (!isDefSecondTaped[i]) {
                     thisViewGameDefEnemy.setImage(null);
                 }
             }
@@ -740,20 +752,19 @@ public class SecondScene {
                 Image thisImage = curList.get(i).getImage();
                 thisView.setImage(thisImage);
             }
-            enemyDeckNum.setText(String.valueOf(SecondPlayer.getSpd().size()));
-            deckNum.setText(String.valueOf(MainArea.getCardNum()));
-        }catch (NullPointerException e){
+            enemyDeckNum.setText(String.valueOf(secondPlayer.getSpd().size()));
+            deckNum.setText(String.valueOf(mainArea.getCardNum()));
+        } catch (NullPointerException e) {
             System.out.println("You clicked on an empty cell");
         }
     }
 
     @FXML
-    protected void takeCard() {
+    private void takeCard() {
         try {
-            if(gameIsEnded){
+            if (gameIsEnded) {
                 return;
             }
-            ImageView[] cardSlots = {cardSlot_1, cardSlot_2, cardSlot_3, cardSlot_4, cardSlot_5, cardSlot_6};
             for (ImageView cardSlot : cardSlots) {
                 cardSlot.setOpacity(1);
             }
@@ -761,8 +772,8 @@ public class SecondScene {
                 if (cardSlot.isHover()) {
                     String s = cardSlot.getId().split("_")[1];
                     int page = pageNum;
-                    Card takenCardC = FirstPlayer.getFpd().get(6 * page + (Integer.parseInt(s) - 1));
-                    if(takenCardC==takenCard){
+                    Card takenCardC = firstPlayer.getFpd().get(6 * page + (Integer.parseInt(s) - 1));
+                    if (takenCardC == takenCard) {
                         takenCard = null;
                         cardIsTaken = false;
                         break;
@@ -773,55 +784,55 @@ public class SecondScene {
                     break;
                 }
             }
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             System.out.println("You clicked on an empty cell");
         }
     }
 
-    private boolean checkEqualsAttack(){
-        if(!cardIsTaken){
+    private boolean checkEqualsAttack() {
+        if (!cardIsTaken) {
             return true;
         }
         boolean isNotEmpty = false;
-            for (int i = 0; i<MainArea.getGameFieldCardAttack().length; i++) {
-                if (MainArea.getGameFieldCardAttack()[i] != null) {
-                    isNotEmpty = true;
-                    break;
-                }
+        for (int i = 0; i < mainArea.getGameFieldCardAttack().length; i++) {
+            if (mainArea.getGameFieldCardAttack()[i] != null) {
+                isNotEmpty = true;
+                break;
             }
-            if(!isNotEmpty){
-                return true;
-            }else {
-                boolean check = true;
-                for (int i = 0; i<MainArea.getGameFieldCardAttack().length; i++) {
-                    if (MainArea.getGameFieldCardAttack()[i] != null){
-                        if(!(takenCard.getRank() == MainArea.getGameFieldCardAttack()[i].getRank())){
-                            check = false;
-                            break;
-                        }
+        }
+        if (!isNotEmpty) {
+            return true;
+        } else {
+            boolean check = true;
+            for (int i = 0; i < mainArea.getGameFieldCardAttack().length; i++) {
+                if (mainArea.getGameFieldCardAttack()[i] != null) {
+                    if (!(takenCard.getRank() == mainArea.getGameFieldCardAttack()[i].getRank())) {
+                        check = false;
+                        break;
                     }
                 }
-                return check;
             }
+            return check;
+        }
     }
 
     @FXML
-    private boolean checkEqualsToss(){
-        if(!cardIsTaken){
+    private boolean checkEqualsToss() {
+        if (!cardIsTaken) {
             return true;
         }
         boolean check = false;
-        for (int i = 0; i<MainArea.getGameFieldCardAttack().length; i++) {
-            if (MainArea.getGameFieldCardAttack()[i] != null){
-                if(takenCard.getRank() == MainArea.getGameFieldCardAttack()[i].getRank()){
+        for (int i = 0; i < mainArea.getGameFieldCardAttack().length; i++) {
+            if (mainArea.getGameFieldCardAttack()[i] != null) {
+                if (takenCard.getRank() == mainArea.getGameFieldCardAttack()[i].getRank()) {
                     check = true;
                     break;
                 }
             }
         }
-        for (int i = 0; i<MainArea.getGameFieldCardDefence().length; i++) {
-            if (MainArea.getGameFieldCardDefence()[i] != null){
-                if(takenCard.getRank() == MainArea.getGameFieldCardDefence()[i].getRank()){
+        for (int i = 0; i < mainArea.getGameFieldCardDefence().length; i++) {
+            if (mainArea.getGameFieldCardDefence()[i] != null) {
+                if (takenCard.getRank() == mainArea.getGameFieldCardDefence()[i].getRank()) {
                     check = true;
                     break;
                 }
@@ -832,125 +843,128 @@ public class SecondScene {
 
 
     @FXML
-    protected void putCard() {
+    private void putCard() {
         try {
-            if(gameIsEnded){
+            if (gameIsEnded) {
                 return;
             }
-            ImageView[] gameCardSlots = {gameCardSlot_1, gameCardSlot_2, gameCardSlot_3, gameCardSlot_4, gameCardSlot_5, gameCardSlot_6};
-            ImageView[] gameCardSlotsDefFirst = {gameCardSlotDefFirst_1, gameCardSlotDefFirst_2, gameCardSlotDefFirst_3, gameCardSlotDefFirst_4, gameCardSlotDefFirst_5, gameCardSlotDefFirst_6};
             ImageView[] cur = new ImageView[6];
             boolean[] curTaped = new boolean[6];
             Card[] curDoing = new Card[6];
             Card[] curDoingCompare = new Card[6];
-            if (MainArea.getPhase() == Phase.FirstAttack || MainArea.getPhase() == Phase.FirstTossing) {
-                if(!checkEqualsAttack() && MainArea.getPhase()==Phase.FirstAttack){
+            if (mainArea.getPhase() == Phase.FirstAttack || mainArea.getPhase() == Phase.FirstTossing) {
+                if (!checkEqualsAttack() && mainArea.getPhase() == Phase.FirstAttack) {
                     return;
                 }
-                if(!checkEqualsToss() && MainArea.getPhase()==Phase.FirstTossing){
+                if (!checkEqualsToss() && mainArea.getPhase() == Phase.FirstTossing) {
                     return;
                 }
                 cur = gameCardSlots;
                 curTaped = isTaped;
-                curDoing = MainArea.getGameFieldCardAttack();
-                curDoingCompare = MainArea.getGameFieldCardDefence();
-            } else if (MainArea.getPhase() == Phase.FirstDefence) {
+                curDoing = mainArea.getGameFieldCardAttack();
+                curDoingCompare = mainArea.getGameFieldCardDefence();
+            } else if (mainArea.getPhase() == Phase.FirstDefence) {
                 cur = gameCardSlotsDefFirst;
                 curTaped = isDefFirstTaped;
-                curDoing = MainArea.getGameFieldCardDefence();
-                curDoingCompare = MainArea.getGameFieldCardAttack();
-            } else if (MainArea.getPhase() == Phase.SecondDefence) {
+                curDoing = mainArea.getGameFieldCardDefence();
+                curDoingCompare = mainArea.getGameFieldCardAttack();
+            } else if (mainArea.getPhase() == Phase.SecondDefence) {
                 return;
-            } else if (MainArea.getPhase() == Phase.SecondAttack) {
+            } else if (mainArea.getPhase() == Phase.SecondAttack) {
                 return;
             }
             for (ImageView cardSlot : cur) {
                 String s = cardSlot.getId().split("_")[1];
                 if (cardSlot.isHover() && cardIsTaken) {
-                    if(MainArea.getPhase()==Phase.FirstDefence) {
-                        if (!MainArea.cardComparator(takenCard, curDoingCompare[Integer.parseInt(s) - 1])) {
-                            return;
-                        }
-                    }
-                    if(MainArea.getPhase()==Phase.FirstTossing){
-                        if(isDefSecondTaped[Integer.parseInt(s)-1]){
-                            return;
-                        }
-                    }
-                    if (curTaped[Integer.parseInt(s) - 1]) {
-                        Card transpCard = curDoing[Integer.parseInt(s) - 1];
-                        curDoing[Integer.parseInt(s) - 1] = takenCard;
-                        cardSlot.setImage(takenCard.getImage());
-                        for (int i = 0; i < FirstPlayer.getFpd().size(); i++) {
-                            if (FirstPlayer.getFpd().get(i) == takenCard) {
-                                FirstPlayer.getFpd().set(i, transpCard);
-                                FirstPlayer.getMass();
-                                endGame();
-                                break;
-                            }
-                        }
-                        ImageView[] cardSlots = {cardSlot_1, cardSlot_2, cardSlot_3, cardSlot_4, cardSlot_5, cardSlot_6};
-                        for (ImageView cardSlotO : cardSlots) {
-                            cardSlotO.setOpacity(1);
-                        }
-                        cardIsTaken = false;
-                        takenCard = null;
-                        updatePage(pageNum);
-                        endGame();
-                        break;
-                    }else {
-                        if(MainArea.getPhase()==Phase.FirstDefence) {
-                            if (!MainArea.cardComparator(takenCard, curDoingCompare[Integer.parseInt(s) - 1])) {
-                                return;
-                            }
-                        }
-                            curDoing[Integer.parseInt(s) - 1] = takenCard;
-                            cardSlot.setImage(takenCard.getImage());
-                            curTaped[Integer.parseInt(s) - 1] = true;
-                            for (int i = 0; i < FirstPlayer.getFpd().size(); i++) {
-                                if (FirstPlayer.getFpd().get(i) == takenCard) {
-                                    FirstPlayer.getFpd().remove(i);
-                                    FirstPlayer.getMass();
-                                    endGame();
-                                    break;
-                                }
-                            }
-                            ImageView[] cardSlots = {cardSlot_1, cardSlot_2, cardSlot_3, cardSlot_4, cardSlot_5, cardSlot_6};
-                            for (ImageView cardSlotO : cardSlots) {
-                                cardSlotO.setOpacity(1);
-                            }
-                            cardIsTaken = false;
-                            takenCard = null;
-                            updatePage(pageNum);
-                            endGame();
-                            break;
+                    putInto(curDoingCompare, curTaped, curDoing, cardSlot, s);
+                } else if (cardSlot.isHover() && curTaped[Integer.parseInt(s) - 1]) {
+                    putFrom(curDoing, curTaped, cardSlot, s);
                 }
-                } else if (cardSlot.isHover() && curTaped[Integer.parseInt(s)-1]) {
-                    if(MainArea.getPhase()==Phase.FirstTossing){
-                        if(isDefSecondTaped[Integer.parseInt(s)-1]){
-                            return;
-                        }
-                    }
-                    FirstPlayer.getFpd().add(curDoing[Integer.parseInt(s) - 1]);
-                    curDoing[Integer.parseInt(s) - 1] = null;
-                    updatePage(pageNum);
-                    if(MainArea.getPhase()==Phase.FirstDefence) {
-                        cardSlot.setImage(null);
-                        curTaped[Integer.parseInt(s) - 1]=false;
-                    }else {
-                        Image thisImage = new Image("file:Sprites/tracing.png");
-                        cardSlot.setImage(thisImage);
-                        curTaped[Integer.parseInt(s) - 1] = false;
-                    }
-                    FirstPlayer.getMass();
+            }
+        } catch (NullPointerException e) {
+            System.out.println("You need to select a new card");
+        } catch (ArrayIndexOutOfBoundsException e1) {
+            System.out.println("There is no enemy card here");
+        }
+    }
+
+    @FXML
+    private void putInto(Card[] curDoingCompare, boolean[] curTaped, Card[] curDoing, ImageView cardSlot, String s) {
+        if (mainArea.getPhase() == Phase.FirstDefence) {
+            if (!mainArea.cardComparator(takenCard, curDoingCompare[Integer.parseInt(s) - 1])) {
+                return;
+            }
+        }
+        if (mainArea.getPhase() == Phase.FirstTossing) {
+            if (isDefSecondTaped[Integer.parseInt(s) - 1]) {
+                return;
+            }
+        }
+        if (curTaped[Integer.parseInt(s) - 1]) {
+            Card transpCard = curDoing[Integer.parseInt(s) - 1];
+            curDoing[Integer.parseInt(s) - 1] = takenCard;
+            cardSlot.setImage(takenCard.getImage());
+            for (int i = 0; i < firstPlayer.getFpd().size(); i++) {
+                if (firstPlayer.getFpd().get(i) == takenCard) {
+                    firstPlayer.getFpd().set(i, transpCard);
+                    firstPlayer.getMass(mainArea.getMassMap());
                     endGame();
                     break;
                 }
             }
-        }catch (NullPointerException e){
-            System.out.println("You need to select a new card");
-        }catch (ArrayIndexOutOfBoundsException e1){
-            System.out.println("There is no enemy card here");
+            for (ImageView cardSlotO : cardSlots) {
+                cardSlotO.setOpacity(1);
+            }
+            cardIsTaken = false;
+            takenCard = null;
+            updatePage(pageNum);
+            endGame();
+        } else {
+            if (mainArea.getPhase() == Phase.FirstDefence) {
+                if (!mainArea.cardComparator(takenCard, curDoingCompare[Integer.parseInt(s) - 1])) {
+                    return;
+                }
+            }
+            curDoing[Integer.parseInt(s) - 1] = takenCard;
+            cardSlot.setImage(takenCard.getImage());
+            curTaped[Integer.parseInt(s) - 1] = true;
+            for (int i = 0; i < firstPlayer.getFpd().size(); i++) {
+                if (firstPlayer.getFpd().get(i) == takenCard) {
+                    firstPlayer.getFpd().remove(i);
+                    firstPlayer.getMass(mainArea.getMassMap());
+                    endGame();
+                    break;
+                }
+            }
+            for (ImageView cardSlotO : cardSlots) {
+                cardSlotO.setOpacity(1);
+            }
+            cardIsTaken = false;
+            takenCard = null;
+            updatePage(pageNum);
+            endGame();
         }
+    }
+
+    @FXML
+    private void putFrom(Card[] curDoing, boolean[] curTaped, ImageView cardSlot, String s){
+        if (mainArea.getPhase() == Phase.FirstTossing) {
+            if (isDefSecondTaped[Integer.parseInt(s) - 1]) {
+                return;
+            }
+        }
+        firstPlayer.getFpd().add(curDoing[Integer.parseInt(s) - 1]);
+        curDoing[Integer.parseInt(s) - 1] = null;
+        updatePage(pageNum);
+        if (mainArea.getPhase() == Phase.FirstDefence) {
+            cardSlot.setImage(null);
+            curTaped[Integer.parseInt(s) - 1] = false;
+        } else {
+            Image thisImage = new Image("file:Sprites/tracing.png");
+            cardSlot.setImage(thisImage);
+            curTaped[Integer.parseInt(s) - 1] = false;
+        }
+        firstPlayer.getMass(mainArea.getMassMap());
+        endGame();
     }
 }

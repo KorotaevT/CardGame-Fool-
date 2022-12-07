@@ -34,8 +34,6 @@ public class HelloController {
         window.setScene(scene);
         window.show();
         window.setResizable(false);
-        MainArea.randomDeck();
-        MainArea.giveMassToMap();
     }
 
     @FXML

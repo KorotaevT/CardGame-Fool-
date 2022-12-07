@@ -9,17 +9,17 @@ import ru.vsu.cs.korotaev.ObjectClasses.Card;
 import java.util.*;
 
 public class MainArea {
-    private static List<Card> deck = createDeck();
-    private static Phase phase = Phase.FirstAttack;
-    private static Color trumpCol;
-    private static boolean isStartGame;
-    private static int cardNum = 54;
-    private static HashMap<Rank, Integer> massMap = new HashMap<Rank, Integer>();
-    private static Card[] gameFieldCardAttack = new Card[6];
-    private static Card[] gameFieldCardDefence = new Card[6];
+    private List<Card> deck = createDeck();
+    private Phase phase = Phase.FirstAttack;
+    private Color trumpCol;
+    private boolean isStartGame;
+    private int cardNum = 54;
+    private HashMap<Rank, Integer> massMap = new HashMap<Rank, Integer>();
+    private Card[] gameFieldCardAttack = new Card[6];
+    private Card[] gameFieldCardDefence = new Card[6];
 
 
-    public static void giveMassToMap() {
+    public void giveMassToMap() {
         massMap.put(Rank.Two, 200);
         massMap.put(Rank.Three, 300);
         massMap.put(Rank.Four, 400);
@@ -36,7 +36,7 @@ public class MainArea {
         massMap.put(Rank.Joker, 1500);
     }
 
-    private static <T> void shuffle(List<T> list) {
+    private <T> void shuffle(List<T> list) {
         Random random = new Random();
         for (int i = list.size() - 1; i >= 1; i--) {
             int j = random.nextInt(i + 1);
@@ -46,7 +46,7 @@ public class MainArea {
         }
     }
 
-    public static List<Card> createDeck() {
+    public List<Card> createDeck() {
         List<Card> list = new ArrayList<>();
         for (Color allColor : Color.values()) {
             if (allColor != Color.Black && allColor != Color.Red) {
@@ -65,7 +65,7 @@ public class MainArea {
         return list;
     }
 
-    public static void randomDeck() {
+    public void randomDeck() {
         shuffle(deck);
         trumpCol = deck.get(deck.size() - 1).getColor();
         for (Card el : deck) {
@@ -81,7 +81,7 @@ public class MainArea {
         }
     }
 
-    public static List<Card> distribution(List<Card> first) {
+    public List<Card> distribution(List<Card> first) {
         if (first.size() < 6) {
             for (int i = first.size(); i < 6; i++) {
                 for (Card card : deck) {
@@ -97,10 +97,10 @@ public class MainArea {
         return first;
     }
 
-    public static boolean cardComparator(Card first, Card second) {
+    public boolean cardComparator(Card first, Card second) {
         int mass1 = 0;
         int mass2 = 0;
-        for (HashMap.Entry<Rank, Integer> entry : MainArea.getMassMap().entrySet()) {
+        for (HashMap.Entry<Rank, Integer> entry : massMap.entrySet()) {
             Rank key = entry.getKey();
             Integer value = entry.getValue();
             if (first.getRank() == key) {
@@ -153,69 +153,67 @@ public class MainArea {
         return false;
     }
 
-
-
-    public static List<Card> getDeck() {
+    public List<Card> getDeck() {
         return deck;
     }
 
-    public static void setDeck(List<Card> deck) {
-        MainArea.deck = deck;
+    public void setDeck(List<Card> deck) {
+        this.deck = deck;
     }
 
-    public static Phase getPhase() {
+    public Phase getPhase() {
         return phase;
     }
 
-    public static void setPhase(Phase phase) {
-        MainArea.phase = phase;
+    public void setPhase(Phase phase) {
+        this.phase = phase;
     }
 
-    public static Color getTrumpCol() {
+    public Color getTrumpCol() {
         return trumpCol;
     }
 
-    public static void setTrumpCol(Color trumpCol) {
-        MainArea.trumpCol = trumpCol;
+    public void setTrumpCol(Color trumpCol) {
+        this.trumpCol = trumpCol;
     }
 
-    public static HashMap<Rank, Integer> getMassMap() {
-        return massMap;
-    }
-
-    public static void setMassMap(HashMap<Rank, Integer> massMap) {
-        MainArea.massMap = massMap;
-    }
-
-    public static Card[] getGameFieldCardAttack() {
-        return gameFieldCardAttack;
-    }
-
-    public static void setGameFieldCardAttack(Card[] gameFieldCardAttack) {
-        MainArea.gameFieldCardAttack = gameFieldCardAttack;
-    }
-
-    public static Card[] getGameFieldCardDefence() {
-        return gameFieldCardDefence;
-    }
-
-    public static void setGameFieldCardDefence(Card[] gameFieldCardDefence) {
-        MainArea.gameFieldCardDefence = gameFieldCardDefence;
-    }
-
-    public static boolean isIsStartGame() {
+    public boolean isStartGame() {
         return isStartGame;
     }
 
-    public static void setIsStartGame(boolean isStartGame) {
-        MainArea.isStartGame = isStartGame;
+    public void setStartGame(boolean startGame) {
+        isStartGame = startGame;
     }
 
-    public static int getCardNum() {
+    public int getCardNum() {
         return cardNum;
     }
 
-    public static void setCardNum(int cardNum) {
-        MainArea.cardNum = cardNum;
+    public void setCardNum(int cardNum) {
+        this.cardNum = cardNum;
+    }
+
+    public HashMap<Rank, Integer> getMassMap() {
+        return massMap;
+    }
+
+    public void setMassMap(HashMap<Rank, Integer> massMap) {
+        this.massMap = massMap;
+    }
+
+    public Card[] getGameFieldCardAttack() {
+        return gameFieldCardAttack;
+    }
+
+    public void setGameFieldCardAttack(Card[] gameFieldCardAttack) {
+        this.gameFieldCardAttack = gameFieldCardAttack;
+    }
+
+    public Card[] getGameFieldCardDefence() {
+        return gameFieldCardDefence;
+    }
+
+    public void setGameFieldCardDefence(Card[] gameFieldCardDefence) {
+        this.gameFieldCardDefence = gameFieldCardDefence;
     }
 }
