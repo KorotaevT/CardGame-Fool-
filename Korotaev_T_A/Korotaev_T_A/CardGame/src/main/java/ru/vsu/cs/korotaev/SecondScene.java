@@ -219,7 +219,6 @@ public class SecondScene {
         phaseBack.setFill(Color.RED);
         phaseText.setText("Атака");
         mainArea.setGameFieldCardAttack(secondPlayer.ifAttack(mainArea.getMassMap()));
-        endGame();
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(event -> {
             try {
@@ -242,7 +241,6 @@ public class SecondScene {
         });
         pause2.play();
         updatePage(pageNum);
-        endGame();
     }
 
     @FXML
@@ -659,7 +657,8 @@ public class SecondScene {
 
     @FXML
     private void nextPageBut() {
-        if (pageNum < 8) {
+        int num =  (int)Math.floor((firstPlayer.getFpd().size() - 1)/6.0);
+        if (pageNum < num) {
             pageNum = pageNum + 1;
         } else {
             pageNum = 0;
@@ -670,10 +669,11 @@ public class SecondScene {
 
     @FXML
     private void prevPageBut() {
+        int num =  (int)Math.floor((firstPlayer.getFpd().size() - 1)/6.0);
         if (pageNum > 0) {
             pageNum = pageNum - 1;
         } else {
-            pageNum = 8;
+            pageNum = num;
         }
         updatePage(pageNum);
     }

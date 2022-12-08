@@ -15,16 +15,16 @@
          </image></ImageView>
       <VBox fx:id="vbox" layoutX="481.0" layoutY="219.0" prefHeight="112.0" prefWidth="214.0" AnchorPane.bottomAnchor="181.0" AnchorPane.leftAnchor="481.0" AnchorPane.rightAnchor="419.0" AnchorPane.topAnchor="219.0">
          <children>
-            <Button fx:id="startBut" mnemonicParsing="false" onAction="#startGame" prefHeight="90.0" prefWidth="420.0" text="Начать игру">
+            <Button fx:id="startBut" mnemonicParsing="false" onAction="#startGame" prefHeight="90.0" prefWidth="420.0" style="-fx-background-radius: 40em; -fx-background-color: #ccc; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-border-radius: 40em;" text="Начать игру">
                <font>
-                  <Font size="25.0" />
+                  <Font name="Verdana Bold" size="32.0" />
                </font></Button>
             <Button fx:id="fake1" mnemonicParsing="false" prefHeight="26.0" prefWidth="198.0" text="Button" visible="false" />
             <Button fx:id="fake2" mnemonicParsing="false" prefHeight="78.0" prefWidth="52.0" text="Button" visible="false" />
             <Button fx:id="fake3" mnemonicParsing="false" text="Button" visible="false" />
-            <Button fx:id="closeBut" mnemonicParsing="false" onAction="#endGame" prefHeight="90.0" prefWidth="420.0" text="Выйти из игры">
+            <Button fx:id="closeBut" mnemonicParsing="false" onAction="#endGame" prefHeight="90.0" prefWidth="420.0" style="-fx-background-radius: 40em; -fx-border-radius: 40em; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-color: #ccc;" text="Выйти из игры">
                <font>
-                  <Font size="25.0" />
+                  <Font name="Verdana Bold" size="32.0" />
                </font></Button>
          </children>
       </VBox>
