@@ -11,7 +11,7 @@
 
 <AnchorPane fx:id="test" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vsu.cs.korotaev.SecondScene">
    <children>
-      <ImageView fx:id="back" fitHeight="900.0" fitWidth="1400.0" layoutX="-12.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="back" fitHeight="806.0" fitWidth="1418.0" layoutX="-10.0" layoutY="-38.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../../../../Sprites/BackGround.jpg" />
          </image>
@@ -69,23 +69,29 @@
                   <Image url="@../../../../../../../Sprites/tracing.png" />
                </image>
             </ImageView>
-            <Button fx:id="prevBut1" layoutX="52.0" layoutY="79.0" mnemonicParsing="false" onMouseClicked="#prevPageBut" prefHeight="60.0" prefWidth="105.0" text="Prev page" visible="false" />
-            <Button fx:id="nextBut1" layoutX="1138.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#nextPageBut" prefHeight="60.0" prefWidth="105.0" text="Next page" textOverrun="CLIP" visible="false" />
+            <Button fx:id="prevBut1" layoutX="52.0" layoutY="79.0" mnemonicParsing="false" onMouseClicked="#prevPageBut" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 40em; -fx-border-radius: 40em; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-color: #ccc;" text="Prev page" visible="false">
+               <font>
+                  <Font name="Verdana Bold" size="14.0" />
+               </font></Button>
+            <Button fx:id="nextBut1" layoutX="1138.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#nextPageBut" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 40em; -fx-background-radius: 40em; -fx-background-color: #ccc; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );" text="Next page" textOverrun="CLIP" visible="false">
+               <font>
+                  <Font name="Verdana Bold" size="14.0" />
+               </font></Button>
          </children>
       </AnchorPane>
-      <Button fx:id="nextBut" layoutX="14.0" layoutY="345.0" mnemonicParsing="false" onMouseClicked="#nextButClick" prefHeight="60.0" prefWidth="160.0" text="Закончить ход" textAlignment="CENTER" visible="false">
+      <Button fx:id="nextBut" layoutX="14.0" layoutY="345.0" mnemonicParsing="false" onMouseClicked="#nextButClick" prefHeight="60.0" prefWidth="160.0" style="-fx-background-color: #ccc; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius: 40em; -fx-border-radius: 40em;" text="Закончить ход" textAlignment="CENTER" visible="false">
          <font>
-            <Font size="19.0" />
+            <Font name="Verdana Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="takeCardBut" layoutX="14.0" layoutY="465.0" mnemonicParsing="false" onMouseClicked="#pickUpCards" prefHeight="60.0" prefWidth="160.0" text="Забрать карты" textAlignment="CENTER" visible="false">
+      <Button fx:id="takeCardBut" layoutX="14.0" layoutY="465.0" mnemonicParsing="false" onMouseClicked="#pickUpCards" prefHeight="60.0" prefWidth="160.0" style="-fx-background-color: #ccc; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius: 40em; -fx-border-radius: 40em;" text="Забрать карты" textAlignment="CENTER" visible="false">
          <font>
-            <Font size="19.0" />
+            <Font name="Verdana Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="reverseBut" layoutX="14.0" layoutY="225.0" mnemonicParsing="false" onMouseClicked="#cardsTransfer" prefHeight="60.0" prefWidth="160.0" text="Перевести ход" textAlignment="CENTER" visible="false">
+      <Button fx:id="reverseBut" layoutX="14.0" layoutY="225.0" mnemonicParsing="false" onMouseClicked="#cardsTransfer" prefHeight="60.0" prefWidth="160.0" style="-fx-background-color: #ccc; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius: 40em; -fx-border-radius: 40em;" text="Перевести ход" textAlignment="CENTER" visible="false">
          <font>
-            <Font size="19.0" />
+            <Font name="Verdana Bold" size="16.0" />
          </font>
       </Button>
       <AnchorPane fx:id="enemyPane" layoutY="-7.0" prefHeight="218.0" prefWidth="1300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-7.0">
@@ -194,9 +200,9 @@
             <Image url="@null" />
          </image>
       </ImageView>
-      <Button fx:id="endBut" disable="true" layoutX="412.0" layoutY="273.0" mnemonicParsing="false" onAction="#endGameBut" prefHeight="201.0" prefWidth="447.0" text="Вернуться в главное меню" textAlignment="CENTER" visible="false">
+      <Button fx:id="endBut" disable="true" layoutX="426.0" layoutY="274.0" mnemonicParsing="false" onAction="#endGameBut" prefHeight="201.0" prefWidth="447.0" style="-fx-background-color: #ccc; -fx-border-width: 10px; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-border-style: solid;" text="Вернуться в главное меню" textAlignment="CENTER" visible="false">
          <font>
-            <Font name="System Bold" size="28.0" />
+            <Font name="Verdana Bold" size="25.0" />
          </font>
       </Button>
    </children>

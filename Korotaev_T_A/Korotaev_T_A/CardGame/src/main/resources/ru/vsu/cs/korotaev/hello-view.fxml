@@ -9,7 +9,7 @@
 
 <AnchorPane fx:id="test" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vsu.cs.korotaev.HelloController">
    <children>
-      <ImageView fx:id="back" fitHeight="900.0" fitWidth="1400.0" layoutX="-19.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="back" fitHeight="806.0" fitWidth="1418.0" layoutX="-10.0" layoutY="-38.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../../../../Sprites/BackGround.jpg" />
          </image></ImageView>
