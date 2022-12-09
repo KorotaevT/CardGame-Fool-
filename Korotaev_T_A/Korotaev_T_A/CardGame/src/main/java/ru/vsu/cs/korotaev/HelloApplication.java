@@ -22,7 +22,13 @@ public class HelloApplication extends Application {
         stage.setTitle("CardGame");
         ImageView imageView = (ImageView)fxmlLoader.getNamespace().get("back");
         Image image = new Image("file:Sprites/BackGround.jpg");
+        ImageView imageView2 = (ImageView)fxmlLoader.getNamespace().get("logo");
+        ImageView imageView3 = (ImageView)fxmlLoader.getNamespace().get("logo1");
+        Image image2 = new Image("file:Sprites/Logo.png");
+        Image image3 = new Image("file:Sprites/logo2.png");
         imageView.setImage(image);
+        imageView2.setImage(image2);
+        imageView3.setImage(image3);
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);

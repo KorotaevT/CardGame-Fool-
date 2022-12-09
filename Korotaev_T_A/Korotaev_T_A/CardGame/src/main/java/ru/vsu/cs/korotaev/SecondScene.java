@@ -145,6 +145,12 @@ public class SecondScene {
     @FXML
     Button endBut;
 
+    @FXML
+    ImageView enemyDeck;
+
+    @FXML
+    AnchorPane enemyPane;
+
     private int pageNum = 0;
     private Card takenCard = new Card();
     private boolean cardIsTaken = false;
@@ -581,8 +587,14 @@ public class SecondScene {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("CardGame");
         ImageView imageView = (ImageView) parent.getChildrenUnmodifiable().get(0);
+        ImageView imageView2 = (ImageView) parent.getChildrenUnmodifiable().get(2);
+        ImageView imageView5 = (ImageView) parent.getChildrenUnmodifiable().get(4);
         Image image = new Image("file:Sprites/BackGround.jpg");
+        Image image3 = new Image("file:Sprites/logo2.jpg");
+        Image image2 = new Image("file:Sprites/Logo.png");
+        imageView2.setImage(image2);
         imageView.setImage(image);
+        imageView5.setImage(image3);
         gameIsEnded = false;
         window.setScene(scene);
         window.show();
@@ -616,6 +628,7 @@ public class SecondScene {
         mainArea = new MainArea();
         firstPlayer = new FirstPlayer();
         secondPlayer = new SecondPlayer();
+        enemyPane.setDisable(true);
         if (!mainArea.isStartGame()) {
             gameCardSlots = new ImageView[]{gameCardSlot_1, gameCardSlot_2, gameCardSlot_3, gameCardSlot_4, gameCardSlot_5, gameCardSlot_6};
             gameCardSlotsDefFirst = new ImageView[]{gameCardSlotDefFirst_1, gameCardSlotDefFirst_2, gameCardSlotDefFirst_3, gameCardSlotDefFirst_4, gameCardSlotDefFirst_5, gameCardSlotDefFirst_6};
@@ -623,6 +636,8 @@ public class SecondScene {
             cardSlots = new ImageView[]{cardSlot_1, cardSlot_2, cardSlot_3, cardSlot_4, cardSlot_5, cardSlot_6};
             mainArea.randomDeck();
             mainArea.giveMassToMap();
+            Image thisImage = new Image("file:Sprites/EnemyDeck.png");
+            enemyDeck.setImage(thisImage);
             firstPlayer.setFpd(mainArea.distribution(firstPlayer.getFpd()));
             secondPlayer.setSpd(mainArea.distribution(secondPlayer.getSpd()));
             firstPlayer.getMass(mainArea.getMassMap());
