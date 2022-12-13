@@ -240,6 +240,7 @@ public class SecondScene {
         pause.setOnFinished(event -> {
             try {
                 enemyStepVisual();
+                updatePage(pageNum);
                 endGame();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -251,6 +252,7 @@ public class SecondScene {
         pause2.setOnFinished(event -> {
             try {
                 nextButClick();
+                updatePage(pageNum);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -271,6 +273,7 @@ public class SecondScene {
                 defSlotsDis();
                 try {
                     enemyStepVisual();
+                    updatePage(pageNum);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -279,6 +282,7 @@ public class SecondScene {
                 endGame();
                 try {
                     nextButClick();
+                    updatePage(pageNum);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -296,6 +300,7 @@ public class SecondScene {
             pause.setOnFinished(event -> {
                 try {
                     enemyStepVisual();
+                    updatePage(pageNum);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -306,6 +311,7 @@ public class SecondScene {
             pause2.setOnFinished(event -> {
                 try {
                     nextButClick();
+                    updatePage(pageNum);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
