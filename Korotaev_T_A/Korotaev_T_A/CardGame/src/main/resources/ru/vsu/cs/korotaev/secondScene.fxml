@@ -39,6 +39,17 @@
       </Text>
       <AnchorPane fx:id="cardPane1" layoutY="540.0" prefHeight="218.0" prefWidth="1300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
+            <Rectangle fx:id="cardsNumBack" arcHeight="5.0" arcWidth="5.0" fill="#38a2ff" height="40.0" layoutX="1105.0" layoutY="-21.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" width="74.0" />
+            <Text fx:id="cardsNumText" layoutX="1120.0" layoutY="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="44.852783203125">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="friendCarpet" fitHeight="287.0" fitWidth="1087.0" layoutX="105.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/blue.png" />
+               </image>
+            </ImageView>
             <ImageView fx:id="cardSlot_1" fitHeight="180.0" fitWidth="135.0" layoutX="195.0" layoutY="20.0" onMouseClicked="#takeCard" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../../../Sprites/tracing.png" />
@@ -69,48 +80,58 @@
                   <Image url="@../../../../../../../Sprites/tracing.png" />
                </image>
             </ImageView>
-            <Button fx:id="prevBut1" layoutX="52.0" layoutY="79.0" mnemonicParsing="false" onMouseClicked="#prevPageBut" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 40em; -fx-border-radius: 40em; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-color: #ccc;" text="Prev page" visible="false">
+            <Button fx:id="prevBut1" layoutX="119.0" layoutY="90.0" mnemonicParsing="false" onMouseClicked="#prevPageBut" prefHeight="40.0" prefWidth="66.0" style="-fx-background-radius: 40em; -fx-border-radius: 40em; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-color: #ccc;" text="Prev" visible="false">
                <font>
                   <Font name="Verdana Bold" size="14.0" />
                </font></Button>
-            <Button fx:id="nextBut1" layoutX="1138.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#nextPageBut" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 40em; -fx-background-radius: 40em; -fx-background-color: #ccc; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );" text="Next page" textOverrun="CLIP" visible="false">
+            <Button fx:id="nextBut1" layoutX="1109.0" layoutY="90.0" mnemonicParsing="false" onMouseClicked="#nextPageBut" prefHeight="40.0" prefWidth="66.0" style="-fx-background-radius: 40em; -fx-background-radius: 40em; -fx-background-color: #ccc; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );" text="Next" textOverrun="CLIP" visible="false">
                <font>
                   <Font name="Verdana Bold" size="14.0" />
-               </font></Button>
+               </font>
+            </Button>
          </children>
       </AnchorPane>
-      <Button fx:id="nextBut" layoutX="14.0" layoutY="345.0" mnemonicParsing="false" onMouseClicked="#nextButClick" prefHeight="60.0" prefWidth="160.0" style="-fx-background-color: #ccc; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius: 40em; -fx-border-radius: 40em;" text="Закончить ход" textAlignment="CENTER" visible="false">
+      <Button fx:id="nextBut" layoutX="14.0" layoutY="388.0" mnemonicParsing="false" onMouseClicked="#nextButClick" prefHeight="60.0" prefWidth="160.0" style="-fx-background-color: #ccc; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius: 40em; -fx-border-radius: 40em;" text="Закончить ход" textAlignment="CENTER" visible="false">
          <font>
             <Font name="Verdana Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="takeCardBut" layoutX="14.0" layoutY="465.0" mnemonicParsing="false" onMouseClicked="#pickUpCards" prefHeight="60.0" prefWidth="160.0" style="-fx-background-color: #ccc; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius: 40em; -fx-border-radius: 40em;" text="Забрать карты" textAlignment="CENTER" visible="false">
+      <Button fx:id="takeCardBut" layoutX="14.0" layoutY="474.0" mnemonicParsing="false" onMouseClicked="#pickUpCards" prefHeight="60.0" prefWidth="160.0" style="-fx-background-color: #ccc; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius: 40em; -fx-border-radius: 40em;" text="Забрать карты" textAlignment="CENTER" visible="false">
          <font>
             <Font name="Verdana Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="reverseBut" layoutX="14.0" layoutY="225.0" mnemonicParsing="false" onMouseClicked="#cardsTransfer" prefHeight="60.0" prefWidth="160.0" style="-fx-background-color: #ccc; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius: 40em; -fx-border-radius: 40em;" text="Перевести ход" textAlignment="CENTER" visible="false">
+      <Button fx:id="reverseBut" layoutX="14.0" layoutY="302.0" mnemonicParsing="false" onMouseClicked="#cardsTransfer" prefHeight="60.0" prefWidth="160.0" style="-fx-background-color: #ccc; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius: 40em; -fx-border-radius: 40em;" text="Перевести ход" textAlignment="CENTER" visible="false">
          <font>
             <Font name="Verdana Bold" size="16.0" />
          </font>
       </Button>
       <AnchorPane fx:id="enemyPane" layoutY="-7.0" prefHeight="218.0" prefWidth="1300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-7.0">
          <children>
+            <Button fx:id="phaseBut" layoutX="14.0" layoutY="224.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" style="-fx-background-color: #0e0e8f; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius: 40em; -fx-border-radius: 40em;" textAlignment="CENTER" visible="false">
+               <font>
+                  <Font name="Verdana Bold" size="16.0" />
+               </font>
+            </Button>
+            <Text fx:id="phaseText" layoutX="23.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-stroke: white; -fx-stroke-width: 1px;" text="phase" textAlignment="CENTER" visible="false" wrappingWidth="142.30694580078125">
+               <font>
+                  <Font name="Verdana Bold" size="16.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="enemyCarpet" fitHeight="287.0" fitWidth="1087.0" layoutX="106.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Sprites/red.png" />
+               </image>
+            </ImageView>
             <ImageView fx:id="enemyDeck" fitHeight="365.0" fitWidth="394.0" layoutX="485.0" layoutY="-109.0" pickOnBounds="true" preserveRatio="true" rotate="-151.0">
                <image>
                   <Image url="@../../../../../../../Sprites/EnemyDeck.png" />
                </image>
             </ImageView>
             <Circle fx:id="enemyDeckCircle" fill="#38a2ff" layoutX="650.0" layoutY="92.0" radius="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" visible="false" />
-            <Text fx:id="enemyDeckNum" layoutX="608.0" layoutY="106.0" onMouseClicked="#giveCards" strokeType="OUTSIDE" strokeWidth="0.0" text="5" textAlignment="CENTER" visible="false" wrappingWidth="83.906982421875">
+            <Text fx:id="enemyDeckNum" layoutX="608.0" layoutY="106.0" onMouseClicked="#giveCards" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" visible="false" wrappingWidth="83.906982421875">
                <font>
                   <Font name="System Bold" size="36.0" />
-               </font>
-            </Text>
-            <Rectangle fx:id="phaseBack" arcHeight="5.0" arcWidth="5.0" fill="LAWNGREEN" height="128.0" layoutX="14.0" layoutY="28.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="160.0" />
-            <Text fx:id="phaseText" layoutX="14.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Атака" textAlignment="CENTER" visible="false" wrappingWidth="159.99999999999994">
-               <font>
-                  <Font name="System Bold" size="23.0" />
                </font>
             </Text>
          </children>

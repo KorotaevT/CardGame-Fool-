@@ -125,10 +125,10 @@ public class SecondScene {
     Text deckNumText;
 
     @FXML
-    Text phaseText;
+    Button phaseBut;
 
     @FXML
-    Rectangle phaseBack;
+    Text phaseText;
 
     @FXML
     Button prevBut1;
@@ -150,6 +150,17 @@ public class SecondScene {
 
     @FXML
     AnchorPane enemyPane;
+
+    @FXML
+    ImageView enemyCarpet;
+
+    @FXML
+    ImageView friendCarpet;
+
+    @FXML
+    Text cardsNumText;
+
+
 
     private int pageNum = 0;
     private Card takenCard = new Card();
@@ -196,7 +207,7 @@ public class SecondScene {
     @FXML
     private void firstAttackNextButTapped() {
         visBut();
-        phaseBack.setFill(Color.LAWNGREEN);
+        phaseBut.setStyle("-fx-background-color:  #0e0e8f; -fx-effect:  dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius:  40em; -fx-border-radius: 40em");
         phaseText.setText("Атака");
         defSlotsDis();
         endGame();
@@ -204,7 +215,7 @@ public class SecondScene {
 
     @FXML
     private void firstDefenceNextButTapped() {
-        phaseBack.setFill(Color.LAWNGREEN);
+        phaseBut.setStyle("-fx-background-color:  #0e0e8f; -fx-effect:  dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius:  40em; -fx-border-radius: 40em");
         phaseText.setText("Защита");
         attSlotsDis();
         endGame();
@@ -213,8 +224,8 @@ public class SecondScene {
     @FXML
     private void firstTossingNextButTapped() {
         visBut();
-        phaseBack.setFill(Color.LAWNGREEN);
-        phaseText.setText("Добавить");
+        phaseBut.setStyle("-fx-background-color:  #0e0e8f; -fx-effect:  dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius:  40em; -fx-border-radius: 40em");
+        phaseText.setText("Подкидывание");
         defSlotsDis();
         endGame();
     }
@@ -222,7 +233,7 @@ public class SecondScene {
     @FXML
     private void secondAttackNextButTapped() throws Exception {
         deVisBut();
-        phaseBack.setFill(Color.RED);
+        phaseBut.setStyle("-fx-background-color:  #8f0e0e; -fx-effect:  dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius:  40em; -fx-border-radius: 40em");
         phaseText.setText("Атака");
         mainArea.setGameFieldCardAttack(secondPlayer.ifAttack(mainArea.getMassMap()));
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
@@ -252,7 +263,7 @@ public class SecondScene {
     @FXML
     private void secondDefenceNextButTapped() throws Exception {
         if (secondPlayer.ifTransfer(mainArea.getGameFieldCardAttack(), mainArea.getGameFieldCardDefence(), firstPlayer.getFpd())) {
-            phaseBack.setFill(Color.RED);
+            phaseBut.setStyle("-fx-background-color:  #8f0e0e; -fx-effect:  dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius:  40em; -fx-border-radius: 40em");
             phaseText.setText("Перевод");
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
             pause.setOnFinished(event -> {
@@ -277,7 +288,7 @@ public class SecondScene {
         }
         endGame();
         deVisBut();
-        phaseBack.setFill(Color.RED);
+        phaseBut.setStyle("-fx-background-color:  #8f0e0e; -fx-effect:  dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius:  40em; -fx-border-radius: 40em");
         phaseText.setText("Защита");
         if (secondPlayer.ifDefence(isDefSecondTaped, mainArea)) {
             endGame();
@@ -335,8 +346,8 @@ public class SecondScene {
 
     @FXML
     private void secondTossingNextButTapped() {
-        phaseBack.setFill(Color.RED);
-        phaseText.setText("Добавить");
+        phaseBut.setStyle("-fx-background-color:  #8f0e0e; -fx-effect:  dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius:  40em; -fx-border-radius: 40em");
+        phaseText.setText("Подкидывание");
         deVisBut();
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(event -> {
@@ -354,7 +365,7 @@ public class SecondScene {
                     endGame();
                 } else {
                     mainArea.setPhase(Phase.FirstDefence);
-                    phaseBack.setFill(Color.LAWNGREEN);
+                    phaseBut.setStyle("-fx-background-color:  #0e0e8f; -fx-effect:  dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius:  40em; -fx-border-radius: 40em");
                     phaseText.setText("Защита");
                     visBut();
                     attSlotsDis();
@@ -481,6 +492,7 @@ public class SecondScene {
             secondPlayer.getMass(mainArea.getMassMap());
             updatePage(pageNum);
             mainArea.setPhase(Phase.FirstTossing);
+            cardsNumText.setText(String.valueOf(firstPlayer.getFpd().size()));
             nextButClick();
         }
     }
@@ -543,18 +555,19 @@ public class SecondScene {
             trumpCard.setImage(null);
             if (firstPlayer.getFpd().size() == 0) {
                 deVisBut();
-                phaseBack.setFill(Color.LAWNGREEN);
+                phaseBut.setStyle("-fx-background-color:  #0e0e8f; -fx-effect:  dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius:  40em; -fx-border-radius: 40em");
                 phaseText.setText("Победа");
                 endSettings();
                 return;
             }
             if (secondPlayer.getSpd().size() == 0) {
                 deVisBut();
-                phaseBack.setFill(Color.RED);
+                phaseBut.setStyle("-fx-background-color:  #8f0e0e; -fx-effect:  dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); -fx-background-radius:  40em; -fx-border-radius: 40em");
                 phaseText.setText("Поражение");
                 endSettings();
             }
         }
+        cardsNumText.setText(String.valueOf(firstPlayer.getFpd().size()));
     }
 
     @FXML
@@ -589,9 +602,30 @@ public class SecondScene {
         ImageView imageView = (ImageView) parent.getChildrenUnmodifiable().get(0);
         ImageView imageView2 = (ImageView) parent.getChildrenUnmodifiable().get(2);
         ImageView imageView5 = (ImageView) parent.getChildrenUnmodifiable().get(4);
+        ImageView imageView6 = (ImageView) parent.getChildrenUnmodifiable().get(5);
+        ImageView imageView7 = (ImageView) parent.getChildrenUnmodifiable().get(6);
+        ImageView imageView8 = (ImageView) parent.getChildrenUnmodifiable().get(7);
+        ImageView imageView9 = (ImageView) parent.getChildrenUnmodifiable().get(8);
+        ImageView imageView10 = (ImageView) parent.getChildrenUnmodifiable().get(9);
+        ImageView imageView11 = (ImageView) parent.getChildrenUnmodifiable().get(10);
+        ImageView imageView12 = (ImageView) parent.getChildrenUnmodifiable().get(11);
         Image image = new Image("file:Sprites/BackGround.jpg");
-        Image image3 = new Image("file:Sprites/logo2.jpg");
+        Image image3 = new Image("file:Sprites/logo2.png");
         Image image2 = new Image("file:Sprites/Logo.png");
+        Image image6 = new Image("file:Sprites/cards_Hearts_Jack.png.png");
+        Image image7 = new Image("file:Sprites/cards_Clubs_Jack.png.png");
+        Image image8 = new Image("file:Sprites/cards_Diamonds_King.png.png");
+        Image image9 = new Image("file:Sprites/cards_Spades_King.png.png");
+        Image image10 = new Image("file:Sprites/cards_Red_Joker.png");
+        Image image11 = new Image("file:Sprites/cards_Black_Joker.png");
+        Image image12 = new Image("file:Sprites/pushkaLogo.png");
+        imageView6.setImage(image6);
+        imageView7.setImage(image7);
+        imageView8.setImage(image8);
+        imageView9.setImage(image9);
+        imageView10.setImage(image10);
+        imageView11.setImage(image11);
+        imageView12.setImage(image12);
         imageView2.setImage(image2);
         imageView.setImage(image);
         imageView5.setImage(image3);
@@ -628,7 +662,7 @@ public class SecondScene {
         mainArea = new MainArea();
         firstPlayer = new FirstPlayer();
         secondPlayer = new SecondPlayer();
-        enemyPane.setDisable(true);
+        enemyPane.setDisable(false);
         if (!mainArea.isStartGame()) {
             gameCardSlots = new ImageView[]{gameCardSlot_1, gameCardSlot_2, gameCardSlot_3, gameCardSlot_4, gameCardSlot_5, gameCardSlot_6};
             gameCardSlotsDefFirst = new ImageView[]{gameCardSlotDefFirst_1, gameCardSlotDefFirst_2, gameCardSlotDefFirst_3, gameCardSlotDefFirst_4, gameCardSlotDefFirst_5, gameCardSlotDefFirst_6};
@@ -655,7 +689,8 @@ public class SecondScene {
             trumpCard.setImage(trumpIm);
             visBut();
             phaseText.setVisible(true);
-            phaseBack.setVisible(true);
+            phaseBut.setVisible(true);
+            cardsNumText.setText(String.valueOf(firstPlayer.getFpd().size()));
             Random rand = new Random();
             int n = rand.nextInt(2) + 1;
             if (n == 1) {
@@ -746,7 +781,7 @@ public class SecondScene {
             }
             AnchorPane thisAnchor = (AnchorPane) test.getChildren().get(6);
             for (int i = 0; i < 6; i++) {
-                ImageView thisView = (ImageView) thisAnchor.getChildren().get(i);
+                ImageView thisView = (ImageView) thisAnchor.getChildren().get(i+3);
                 ImageView thisViewGame = (ImageView) test.getChildren().get(i + 11);
                 ImageView thisViewGameDef = (ImageView) test.getChildren().get(i + 17);
                 ImageView thisViewGameDefEnemy = (ImageView) test.getChildren().get(i + 23);
@@ -763,12 +798,13 @@ public class SecondScene {
                 }
             }
             for (int i = 0; i < curList.size(); i++) {
-                ImageView thisView = (ImageView) thisAnchor.getChildren().get(i);
+                ImageView thisView = (ImageView) thisAnchor.getChildren().get(i+3);
                 Image thisImage = curList.get(i).getImage();
                 thisView.setImage(thisImage);
             }
             enemyDeckNum.setText(String.valueOf(secondPlayer.getSpd().size()));
             deckNum.setText(String.valueOf(mainArea.getCardNum()));
+            cardsNumText.setText(String.valueOf(firstPlayer.getFpd().size()));
         } catch (NullPointerException e) {
             System.out.println("You clicked on an empty cell");
         }
@@ -798,6 +834,7 @@ public class SecondScene {
                     cardSlot.setOpacity(0.5);
                     break;
                 }
+                cardsNumText.setText(String.valueOf(firstPlayer.getFpd().size()));
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println("You clicked on an empty cell");
@@ -837,6 +874,20 @@ public class SecondScene {
             return true;
         }
         boolean check = false;
+        int notNullAttack = 0;
+        int notNullDefence = 0;
+        for (int i = 0; i < mainArea.getGameFieldCardAttack().length; i++) {
+            if (mainArea.getGameFieldCardAttack()[i] != null) {
+                notNullAttack++;
+            }
+
+            if (mainArea.getGameFieldCardDefence()[i] != null) {
+                notNullDefence++;
+            }
+        }
+        if(notNullAttack == (notNullDefence + secondPlayer.getSpd().size())){
+            return check;
+        }
         for (int i = 0; i < mainArea.getGameFieldCardAttack().length; i++) {
             if (mainArea.getGameFieldCardAttack()[i] != null) {
                 if (takenCard.getRank() == mainArea.getGameFieldCardAttack()[i].getRank()) {
@@ -919,6 +970,7 @@ public class SecondScene {
             Card transpCard = curDoing[Integer.parseInt(s) - 1];
             curDoing[Integer.parseInt(s) - 1] = takenCard;
             cardSlot.setImage(takenCard.getImage());
+            cardsNumText.setText(String.valueOf(firstPlayer.getFpd().size()));
             for (int i = 0; i < firstPlayer.getFpd().size(); i++) {
                 if (firstPlayer.getFpd().get(i) == takenCard) {
                     firstPlayer.getFpd().set(i, transpCard);
@@ -942,6 +994,7 @@ public class SecondScene {
             }
             curDoing[Integer.parseInt(s) - 1] = takenCard;
             cardSlot.setImage(takenCard.getImage());
+            cardsNumText.setText(String.valueOf(firstPlayer.getFpd().size()));
             curTaped[Integer.parseInt(s) - 1] = true;
             for (int i = 0; i < firstPlayer.getFpd().size(); i++) {
                 if (firstPlayer.getFpd().get(i) == takenCard) {
@@ -977,6 +1030,7 @@ public class SecondScene {
         } else {
             Image thisImage = new Image("file:Sprites/tracing.png");
             cardSlot.setImage(thisImage);
+            cardsNumText.setText(String.valueOf(firstPlayer.getFpd().size()));
             curTaped[Integer.parseInt(s) - 1] = false;
         }
         firstPlayer.getMass(mainArea.getMassMap());

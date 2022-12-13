@@ -31,6 +31,14 @@ public class HelloController {
         Image image2 = new Image("file:Sprites/cardsback.png");
         imageView2.setImage(image2);
 
+        ImageView imageView3 = (ImageView) parent.getChildrenUnmodifiable().get(6).lookup("#friendCarpet");
+        Image image3 = new Image("file:Sprites/blue.png");
+        imageView3.setImage(image3);
+
+        ImageView imageView4 = (ImageView) parent.getChildrenUnmodifiable().get(10).lookup("#enemyCarpet");
+        Image image4 = new Image("file:Sprites/red.png");
+        imageView4.setImage(image4);
+
         window.setScene(scene);
         window.show();
         window.setResizable(false);
